@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Picking Form</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 15px;
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.12);
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      font-size: 16px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    button {
+      border: none;
+      padding: 14px 8px;
+      border-radius: 9px;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Different button colors */
+
+    .view-btn {
+      background: #2563eb;
+    }
+
+    .edit-btn {
+      background: #f59e0b;
+    }
+
+    .save-btn {
+      background: #16a34a;
+    }
+
+    .reset-btn {
+      background: #dc2626;
+    }
+
+    .history-btn {
+      background: #7c3aed;
+      grid-column: 1 / -1;
+    }
+
+    .complete-btn {
+      width: 100%;
+      margin-top: 15px;
+      background: #059669;
+      font-size: 17px;
+    }
+
+    .vrp-btn {
+      width: 100%;
+      margin-top: 10px;
+      background: #0891b2;
+      font-size: 17px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h2>📦 PICKING FORM</h2>
+
+    <!-- Tote ID is ONLY a form field -->
+    <div class="form-group">
+      <label for="toteId">Tote ID</label>
+      <input
+        type="text"
+        id="toteId"
+        placeholder="Example: 428-00506"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="vendor">Vendor</label>
+      <input
+        type="text"
+        id="vendor"
+        placeholder="Enter Vendor"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="pickerName">Picker Name</label>
+      <input
+        type="text"
+        id="pickerName"
+        placeholder="Enter Picker Name"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="tlNo">TL</label>
+      <input
+        type="text"
+        id="tlNo"
+        placeholder="Enter TL"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="totalQty">Total Qty</label>
+      <input
+        type="number"
+        id="totalQty"
+        placeholder="Enter Total Qty"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="rejectQty">Reject Qty</label>
+      <input
+        type="number"
+        id="rejectQty"
+        placeholder="Enter Reject Qty"
+      >
+    </div>
+
+    <!-- Management Buttons -->
+    <div class="buttons">
+
+      <button
+        class="view-btn"
+        onclick="viewData()">
+        👁️ View Data
+      </button>
+
+      <button
+        class="edit-btn"
+        onclick="editData()">
+        ✏️ Edit Data
+      </button>
+
+      <button
+        class="save-btn"
+        onclick="saveData()">
+        💾 Save Data
+      </button>
+
+      <button
+        class="reset-btn"
+        onclick="resetTote()">
+        🔄 Reset Tote
+      </button>
+
+      <button
+        class="history-btn"
+        onclick="viewHistory()">
+        📜 View History
+      </button>
+
+    </div>
+
+    <!-- Picking Complete -->
+    <button
+      class="complete-btn"
+      onclick="pickingComplete()">
+      ✅ PICKING COMPLETE
+    </button>
+
+    <!-- VRP Verification -->
+    <button
+      class="vrp-btn"
+      onclick="vrpVerify()">
+      🔐 VRP VERIFY
+    </button>
+
+  </div>
+
+  <script>
+
+    function viewData() {
+      alert("View Data will be connected in the next step.");
+    }
+
+    function editData() {
+      alert("Edit Data will be connected in the next step.");
+    }
+
+    function saveData() {
+      alert("Save Data will be connected to Google Sheet.");
+    }
+
+    function resetTote() {
+
+      const confirmReset = confirm(
+        "⚠️ Reset Tote?\n\n" +
+        "Current data will first be saved to History."
+      );
+
+      if (confirmReset) {
+        alert(
+          "Reset system will be connected in the next step."
+        );
+      }
+    }
+
+    function viewHistory() {
+      alert("Tote History will be connected in the next step.");
+    }
+
+    function pickingComplete() {
+      alert(
+        "Picking Complete.\n\n" +
+        "Next process: VRP Verification."
+      );
+    }
+
+    function vrpVerify() {
+      alert(
+        "VRP Verification will be connected in the next step."
+      );
+    }
+
+  </script>
+
+</body>
+</html>
