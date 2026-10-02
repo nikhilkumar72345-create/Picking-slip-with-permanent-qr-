@@ -15,7 +15,7 @@
 
 body{
   margin:0;
-  font-family:Inter,Arial,sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
   background:#f1f5f9;
   color:#0f172a;
 }
@@ -185,7 +185,6 @@ button{
   font-size:15px;
   font-weight:700;
   cursor:pointer;
-  transition:.15s;
 }
 
 button:active{
@@ -209,10 +208,6 @@ button:disabled{
   background:#f1f5f9;
   color:#0f172a;
   border:1px solid #cbd5e1;
-}
-
-.view-btn:hover{
-  background:#e2e8f0;
 }
 
 .success-btn{
@@ -281,15 +276,6 @@ button:disabled{
   word-break:break-word;
 }
 
-.status-pill{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:20px;
-  background:#dbeafe;
-  color:#1e40af;
-  font-size:12px;
-}
-
 .divider{
   height:1px;
   background:#e2e8f0;
@@ -329,6 +315,7 @@ button:disabled{
   <div class="header-inner">
     <div class="brand">
       <div class="logo">📦</div>
+
       <div>
         <h1>Tote Picking Management</h1>
         <p>Permanent Tote QR • Picking • VRP • Verification</p>
@@ -340,354 +327,355 @@ button:disabled{
 
 <main class="container">
 
-  <div id="statusBox" class="status"></div>
+<div id="statusBox" class="status"></div>
 
 
-  <!-- =================================================
-       TOTE CONTROL
-  ================================================== -->
+<!-- ==============================
+     TOTE CONTROL
+================================ -->
 
-  <section class="card">
+<section class="card">
 
-    <div class="section-head">
-      <div class="section-icon">🔎</div>
-      <div>
-        <div class="section-title">Tote Control</div>
-        <div class="section-subtitle">
-          Scan or enter permanent Tote ID
-        </div>
+  <div class="section-head">
+
+    <div class="section-icon">🔎</div>
+
+    <div>
+      <div class="section-title">
+        Tote Control
+      </div>
+
+      <div class="section-subtitle">
+        Scan or enter permanent Tote ID
       </div>
     </div>
 
-    <label>Tote ID</label>
+  </div>
 
-    <div class="tote-input-wrap">
+
+  <label>Tote ID</label>
+
+  <div class="tote-input-wrap">
+
+    <input
+      id="toteId"
+      type="text"
+      placeholder="Scan Tote QR"
+      autocomplete="off"
+      autofocus
+    >
+
+    <span class="scan-icon">▣</span>
+
+  </div>
+
+
+  <button
+    class="primary"
+    id="loadBtn"
+    onclick="loadTote()">
+
+    ▶ START / LOAD TOTE
+
+  </button>
+
+
+  <button
+    class="view-btn"
+    id="viewBtn"
+    onclick="viewTote()">
+
+    👁️ VIEW TOTE
+
+  </button>
+
+</section>
+
+
+<!-- ==============================
+     PICKING FORM
+================================ -->
+
+<section
+  id="pickingCard"
+  class="card hidden">
+
+  <div class="section-head">
+
+    <div class="section-icon">📝</div>
+
+    <div>
+      <div class="section-title">
+        Picking Form
+      </div>
+
+      <div class="section-subtitle">
+        Enter picking information
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="tote-banner">
+
+    <div class="tote-label">
+      ACTIVE TOTE
+    </div>
+
+    <div
+      id="displayTote"
+      class="tote-id">
+      ---
+    </div>
+
+  </div>
+
+
+  <label>Vendor</label>
+
+  <input
+    id="vendor"
+    type="text"
+    placeholder="Enter vendor name"
+  >
+
+
+  <label>Picker Name</label>
+
+  <input
+    id="pickerName"
+    type="text"
+    placeholder="Enter picker name"
+  >
+
+
+  <label>TL</label>
+
+  <input
+    id="tlNo"
+    type="text"
+    placeholder="Enter TL name / number"
+  >
+
+
+  <div class="grid">
+
+    <div>
+
+      <label>Total Quantity</label>
 
       <input
-        id="toteId"
-        type="text"
-        placeholder="Scan Tote QR"
-        autocomplete="off"
-        autofocus
+        id="totalQty"
+        type="number"
+        min="0"
+        placeholder="0"
       >
 
-      <span class="scan-icon">▣</span>
-
     </div>
 
 
-    <!-- START LOAD -->
+    <div>
 
-    <button
-      class="primary"
-      id="loadBtn"
-      onclick="loadTote()">
+      <label>Reject Quantity</label>
 
-      ▶ START / LOAD TOTE
-
-    </button>
-
-
-    <!-- NEW VIEW OPTION -->
-
-    <button
-      class="view-btn"
-      id="viewBtn"
-      onclick="viewTote()">
-
-      👁️ VIEW TOTE
-
-    </button>
-
-  </section>
-
-
-  <!-- =================================================
-       PICKING FORM
-  ================================================== -->
-
-  <section
-    id="pickingCard"
-    class="card hidden">
-
-    <div class="section-head">
-
-      <div class="section-icon">📝</div>
-
-      <div>
-        <div class="section-title">
-          Picking Form
-        </div>
-
-        <div class="section-subtitle">
-          Enter picking information
-        </div>
-      </div>
+      <input
+        id="rejectQty"
+        type="number"
+        min="0"
+        value="0"
+        placeholder="0"
+      >
 
     </div>
 
-
-    <div class="tote-banner">
-
-      <div class="tote-label">
-        ACTIVE TOTE
-      </div>
-
-      <div
-        id="displayTote"
-        class="tote-id">
-        ---
-      </div>
-
-    </div>
-
-
-    <label>Vendor</label>
-
-    <input
-      id="vendor"
-      type="text"
-      placeholder="Enter vendor name"
-    >
-
-
-    <label>Picker Name</label>
-
-    <input
-      id="pickerName"
-      type="text"
-      placeholder="Enter picker name"
-    >
-
-
-    <label>TL</label>
-
-    <input
-      id="tlNo"
-      type="text"
-      placeholder="Enter TL name / number"
-    >
-
-
-    <div class="grid">
-
-      <div>
-
-        <label>Total Quantity</label>
-
-        <input
-          id="totalQty"
-          type="number"
-          min="0"
-          placeholder="0"
-        >
-
-      </div>
-
-
-      <div>
-
-        <label>Reject Quantity</label>
-
-        <input
-          id="rejectQty"
-          type="number"
-          min="0"
-          value="0"
-          placeholder="0"
-        >
-
-      </div>
-
-    </div>
-
-
-    <button
-      class="primary"
-      onclick="saveData()">
-
-      💾 SAVE PICKING
-
-    </button>
-
-
-    <button
-      class="success-btn"
-      onclick="completePicking()">
-
-      ✅ PICKING COMPLETE
-
-    </button>
-
-  </section>
-
-
-  <!-- =================================================
-       VRP
-  ================================================== -->
-
-  <section
-    id="vrpCard"
-    class="card hidden">
-
-    <div class="section-head">
-
-      <div class="section-icon">🔐</div>
-
-      <div>
-        <div class="section-title">
-          VRP Verification
-        </div>
-
-        <div class="section-subtitle">
-          Verify VRP after picking completion
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <label>VRP Number</label>
-
-    <input
-      id="vrp"
-      type="text"
-      placeholder="Enter VRP"
-    >
-
-
-    <button
-      class="warning-btn"
-      onclick="verifyVRP()">
-
-      🔐 VERIFY VRP
-
-    </button>
-
-  </section>
-
-
-  <!-- =================================================
-       VIEW / DETAILS
-  ================================================== -->
-
-  <section
-    id="detailsCard"
-    class="card hidden">
-
-    <div class="section-head">
-
-      <div class="section-icon">👁️</div>
-
-      <div>
-        <div class="section-title">
-          Tote Details
-        </div>
-
-        <div class="section-subtitle">
-          Read-only current Tote information
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="tote-banner">
-
-      <div class="tote-label">
-        TOTE ID
-      </div>
-
-      <div
-        id="dTote"
-        class="tote-id">
-        ---
-      </div>
-
-    </div>
-
-
-    <div class="grid">
-
-      <div class="info">
-        <small>Vendor</small>
-        <strong id="dVendor">---</strong>
-      </div>
-
-      <div class="info">
-        <small>Picker Name</small>
-        <strong id="dPicker">---</strong>
-      </div>
-
-      <div class="info">
-        <small>TL</small>
-        <strong id="dTL">---</strong>
-      </div>
-
-      <div class="info">
-        <small>Total Quantity</small>
-        <strong id="dTotal">---</strong>
-      </div>
-
-      <div class="info">
-        <small>Reject Quantity</small>
-        <strong id="dReject">---</strong>
-      </div>
-
-      <div class="info">
-        <small>Status</small>
-        <strong id="dStatus">---</strong>
-      </div>
-
-      <div class="info">
-        <small>VRP</small>
-        <strong id="dVRP">---</strong>
-      </div>
-
-      <div class="info">
-        <small>VRP Status</small>
-        <strong id="dVRPStatus">---</strong>
-      </div>
-
-    </div>
-
-
-    <div class="divider"></div>
-
-
-    <button
-      class="danger-btn"
-      onclick="resetTote()">
-
-      ♻️ COMPLETE / RESET TOTE
-
-    </button>
-
-  </section>
-
-
-  <div class="footer">
-    Tote Picking Management System • Google Sheets Connected
   </div>
+
+
+  <button
+    class="primary"
+    onclick="saveData()">
+
+    💾 SAVE PICKING
+
+  </button>
+
+
+  <button
+    class="success-btn"
+    onclick="completePicking()">
+
+    ✅ PICKING COMPLETE
+
+  </button>
+
+</section>
+
+
+<!-- ==============================
+     VRP
+================================ -->
+
+<section
+  id="vrpCard"
+  class="card hidden">
+
+  <div class="section-head">
+
+    <div class="section-icon">🔐</div>
+
+    <div>
+      <div class="section-title">
+        VRP Verification
+      </div>
+
+      <div class="section-subtitle">
+        Verify VRP after picking completion
+      </div>
+    </div>
+
+  </div>
+
+
+  <label>VRP Number</label>
+
+  <input
+    id="vrp"
+    type="text"
+    placeholder="Enter VRP"
+  >
+
+
+  <button
+    class="warning-btn"
+    onclick="verifyVRP()">
+
+    🔐 VERIFY VRP
+
+  </button>
+
+</section>
+
+
+<!-- ==============================
+     DETAILS
+================================ -->
+
+<section
+  id="detailsCard"
+  class="card hidden">
+
+  <div class="section-head">
+
+    <div class="section-icon">👁️</div>
+
+    <div>
+      <div class="section-title">
+        Tote Details
+      </div>
+
+      <div class="section-subtitle">
+        Read-only current Tote information
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="tote-banner">
+
+    <div class="tote-label">
+      TOTE ID
+    </div>
+
+    <div
+      id="dTote"
+      class="tote-id">
+      ---
+    </div>
+
+  </div>
+
+
+  <div class="grid">
+
+    <div class="info">
+      <small>Vendor</small>
+      <strong id="dVendor">---</strong>
+    </div>
+
+    <div class="info">
+      <small>Picker Name</small>
+      <strong id="dPicker">---</strong>
+    </div>
+
+    <div class="info">
+      <small>TL</small>
+      <strong id="dTL">---</strong>
+    </div>
+
+    <div class="info">
+      <small>Total Quantity</small>
+      <strong id="dTotal">---</strong>
+    </div>
+
+    <div class="info">
+      <small>Reject Quantity</small>
+      <strong id="dReject">---</strong>
+    </div>
+
+    <div class="info">
+      <small>Status</small>
+      <strong id="dStatus">---</strong>
+    </div>
+
+    <div class="info">
+      <small>VRP</small>
+      <strong id="dVRP">---</strong>
+    </div>
+
+    <div class="info">
+      <small>VRP Status</small>
+      <strong id="dVRPStatus">---</strong>
+    </div>
+
+  </div>
+
+
+  <div class="divider"></div>
+
+
+  <button
+    class="danger-btn"
+    onclick="resetTote()">
+
+    ♻️ COMPLETE / RESET TOTE
+
+  </button>
+
+</section>
+
+
+<div class="footer">
+  Tote Picking Management System • Google Sheets Connected
+</div>
 
 </main>
 
 
 <script>
 
-/* =====================================================
-   GOOGLE APPS SCRIPT API
-===================================================== */
+/* ==========================================
+   GOOGLE APPS SCRIPT URL
+========================================== */
 
 const API_URL =
 "https://script.google.com/macros/s/AKfycbxrvoIPkhcN4jPWotX6DCDmLsI1v01G96tYMfZ_l_cYdhDCUxuk5sVMivjHlZUoRrOU/exec";
 
 
-/* =====================================================
+/* ==========================================
    ELEMENTS
-===================================================== */
+========================================== */
 
 const toteIdEl =
 document.getElementById("toteId");
@@ -726,9 +714,9 @@ const displayTote =
 document.getElementById("displayTote");
 
 
-/* =====================================================
+/* ==========================================
    STATUS
-===================================================== */
+========================================== */
 
 function showStatus(message,type="info"){
 
@@ -737,13 +725,12 @@ function showStatus(message,type="info"){
 
   statusBox.textContent =
     message;
-
 }
 
 
-/* =====================================================
+/* ==========================================
    API REQUEST
-===================================================== */
+========================================== */
 
 async function apiRequest(payload){
 
@@ -765,7 +752,6 @@ async function apiRequest(payload){
     throw new Error(
       "HTTP " + response.status
     );
-
   }
 
 
@@ -785,18 +771,16 @@ async function apiRequest(payload){
     throw new Error(
       "Invalid Google API response"
     );
-
   }
 
 
   return result;
-
 }
 
 
-/* =====================================================
-   START / LOAD TOTE
-===================================================== */
+/* ==========================================
+   LOAD TOTE
+========================================== */
 
 async function loadTote(){
 
@@ -814,7 +798,6 @@ async function loadTote(){
     toteIdEl.focus();
 
     return;
-
   }
 
 
@@ -828,19 +811,14 @@ async function loadTote(){
 
     const result =
       await apiRequest({
-
         action:"get",
-
         toteId:toteId
-
       });
 
 
     if(result.success){
 
-      fillData(
-        result.data
-      );
+      fillData(result.data);
 
       showStatus(
         "Tote loaded successfully",
@@ -848,13 +826,10 @@ async function loadTote(){
       );
 
       return;
-
     }
 
 
-    /*
-      New Tote
-    */
+    /* New Tote */
 
     clearForm();
 
@@ -882,15 +857,13 @@ async function loadTote(){
       error.message,
       "error"
     );
-
   }
-
 }
 
 
-/* =====================================================
+/* ==========================================
    VIEW TOTE
-===================================================== */
+========================================== */
 
 async function viewTote(){
 
@@ -908,7 +881,6 @@ async function viewTote(){
     toteIdEl.focus();
 
     return;
-
   }
 
 
@@ -922,23 +894,22 @@ async function viewTote(){
 
     const result =
       await apiRequest({
-
         action:"get",
-
         toteId:toteId
-
       });
 
 
     if(!result.success){
 
-      /*
-        Important:
-        View mode में नया Tote
-        editing form नहीं खोलेगा.
-      */
-
       detailsCard.classList.add(
+        "hidden"
+      );
+
+      pickingCard.classList.add(
+        "hidden"
+      );
+
+      vrpCard.classList.add(
         "hidden"
       );
 
@@ -948,17 +919,10 @@ async function viewTote(){
       );
 
       return;
-
     }
 
 
-    /*
-      View only
-    */
-
-    showDetails(
-      result.data
-    );
+    showDetails(result.data);
 
     pickingCard.classList.add(
       "hidden"
@@ -981,15 +945,13 @@ async function viewTote(){
       error.message,
       "error"
     );
-
   }
-
 }
 
 
-/* =====================================================
+/* ==========================================
    FILL DATA
-===================================================== */
+========================================== */
 
 function fillData(data){
 
@@ -1024,11 +986,8 @@ function fillData(data){
 
 
   if(
-    data.status ===
-      "Picking Complete" ||
-
-    data.status ===
-      "VRP Verified"
+    data.status === "Picking Complete" ||
+    data.status === "VRP Verified"
   ){
 
     vrpCard.classList.remove(
@@ -1040,18 +999,16 @@ function fillData(data){
     vrpCard.classList.add(
       "hidden"
     );
-
   }
 
 
   showDetails(data);
-
 }
 
 
-/* =====================================================
+/* ==========================================
    CLEAR FORM
-===================================================== */
+========================================== */
 
 function clearForm(){
 
@@ -1074,13 +1031,12 @@ function clearForm(){
   detailsCard.classList.add(
     "hidden"
   );
-
 }
 
 
-/* =====================================================
-   SAVE
-===================================================== */
+/* ==========================================
+   SAVE DATA
+========================================== */
 
 async function saveData(){
 
@@ -1096,7 +1052,6 @@ async function saveData(){
     );
 
     return;
-
   }
 
 
@@ -1110,7 +1065,6 @@ async function saveData(){
     pickerNameEl.focus();
 
     return;
-
   }
 
 
@@ -1124,7 +1078,6 @@ async function saveData(){
     totalQtyEl.focus();
 
     return;
-
   }
 
 
@@ -1168,7 +1121,6 @@ async function saveData(){
       throw new Error(
         result.message
       );
-
     }
 
 
@@ -1188,15 +1140,13 @@ async function saveData(){
       error.message,
       "error"
     );
-
   }
-
 }
 
 
-/* =====================================================
+/* ==========================================
    PICKING COMPLETE
-===================================================== */
+========================================== */
 
 async function completePicking(){
 
@@ -1212,7 +1162,32 @@ async function completePicking(){
     );
 
     return;
+  }
 
+
+  if(!pickerNameEl.value.trim()){
+
+    showStatus(
+      "Picker Name required",
+      "error"
+    );
+
+    pickerNameEl.focus();
+
+    return;
+  }
+
+
+  if(!totalQtyEl.value){
+
+    showStatus(
+      "Total Quantity required",
+      "error"
+    );
+
+    totalQtyEl.focus();
+
+    return;
   }
 
 
@@ -1224,9 +1199,7 @@ async function completePicking(){
 
   try{
 
-    /*
-      First save latest form data
-    */
+    /* Save latest data first */
 
     const saveResult =
       await apiRequest({
@@ -1260,13 +1233,10 @@ async function completePicking(){
       throw new Error(
         saveResult.message
       );
-
     }
 
 
-    /*
-      Then complete
-    */
+    /* Complete Picking */
 
     const result =
       await apiRequest({
@@ -1283,7 +1253,6 @@ async function completePicking(){
       throw new Error(
         result.message
       );
-
     }
 
 
@@ -1308,15 +1277,13 @@ async function completePicking(){
       error.message,
       "error"
     );
-
   }
-
 }
 
 
-/* =====================================================
+/* ==========================================
    VRP VERIFY
-===================================================== */
+========================================== */
 
 async function verifyVRP(){
 
@@ -1325,6 +1292,17 @@ async function verifyVRP(){
 
   const vrp =
     vrpEl.value.trim();
+
+
+  if(!toteId){
+
+    showStatus(
+      "Tote ID required",
+      "error"
+    );
+
+    return;
+  }
 
 
   if(!vrp){
@@ -1337,7 +1315,6 @@ async function verifyVRP(){
     vrpEl.focus();
 
     return;
-
   }
 
 
@@ -1366,7 +1343,6 @@ async function verifyVRP(){
       throw new Error(
         result.message
       );
-
     }
 
 
@@ -1386,15 +1362,13 @@ async function verifyVRP(){
       error.message,
       "error"
     );
-
   }
-
 }
 
 
-/* =====================================================
-   DETAILS
-===================================================== */
+/* ==========================================
+   SHOW DETAILS
+========================================== */
 
 function showDetails(data){
 
@@ -1403,40 +1377,48 @@ function showDetails(data){
   ).textContent =
     data.toteId || "---";
 
+
   document.getElementById(
     "dVendor"
   ).textContent =
     data.vendor || "---";
+
 
   document.getElementById(
     "dPicker"
   ).textContent =
     data.pickerName || "---";
 
+
   document.getElementById(
     "dTL"
   ).textContent =
     data.tlNo || "---";
+
 
   document.getElementById(
     "dTotal"
   ).textContent =
     data.totalQty || "---";
 
+
   document.getElementById(
     "dReject"
   ).textContent =
     data.rejectQty || "0";
+
 
   document.getElementById(
     "dStatus"
   ).textContent =
     data.status || "---";
 
+
   document.getElementById(
     "dVRP"
   ).textContent =
     data.vrp || "---";
+
 
   document.getElementById(
     "dVRPStatus"
@@ -1447,13 +1429,12 @@ function showDetails(data){
   detailsCard.classList.remove(
     "hidden"
   );
-
 }
 
 
-/* =====================================================
-   RESET TOTE
-===================================================== */
+/* ==========================================
+   RESET / COMPLETE TOTE
+========================================== */
 
 async function resetTote(){
 
@@ -1469,23 +1450,23 @@ async function resetTote(){
     );
 
     return;
-
   }
 
 
-  const confirmed =
+  const confirmReset =
     confirm(
-      "Complete / Reset this Tote?"
+      "Are you sure you want to Complete / Reset this Tote?"
     );
 
 
-  if(!confirmed){
+  if(!confirmReset){
+
     return;
   }
 
 
   showStatus(
-    "Resetting Tote...",
+    "Completing / Resetting Tote...",
     "info"
   );
 
@@ -1507,15 +1488,16 @@ async function resetTote(){
       throw new Error(
         result.message
       );
-
     }
 
 
     showStatus(
-      "Tote completed and history saved",
+      "Tote completed. History saved successfully.",
       "success"
     );
 
+
+    /* Clear screen */
 
     toteIdEl.value = "";
 
@@ -1534,6 +1516,9 @@ async function resetTote(){
     );
 
 
+    toteIdEl.focus();
+
+
   }catch(error){
 
     showStatus(
@@ -1541,15 +1526,13 @@ async function resetTote(){
       error.message,
       "error"
     );
-
   }
-
 }
 
 
-/* =====================================================
+/* ==========================================
    ENTER KEY
-===================================================== */
+========================================== */
 
 toteIdEl.addEventListener(
   "keydown",
@@ -1560,19 +1543,22 @@ toteIdEl.addEventListener(
       event.preventDefault();
 
       loadTote();
-
     }
-
   }
 );
 
 
-/* =====================================================
-   STARTUP
-===================================================== */
+/* ==========================================
+   PAGE LOAD
+========================================== */
 
-console.log(
-  "Professional Tote Picking Form loaded"
+window.addEventListener(
+  "load",
+  function(){
+
+    toteIdEl.focus();
+
+  }
 );
 
 </script>
