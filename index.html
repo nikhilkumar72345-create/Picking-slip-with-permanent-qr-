@@ -1,86 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Tote Picking Form</title>
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Tote Picking Management</title>
 
   <style>
+
     * {
       box-sizing: border-box;
-      font-family: Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
       margin: 0;
-      padding: 15px;
-      background: #f2f4f7;
+      background: #eef2f6;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #172033;
     }
 
-    .container {
-      max-width: 600px;
+    .app {
+      max-width: 650px;
       margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+      min-height: 100vh;
+      padding-bottom: 30px;
     }
 
-    h1 {
-      text-align: center;
-      margin-top: 0;
-      color: #1d3557;
-      font-size: 26px;
+    /* ================= HEADER ================= */
+
+    .header {
+      background: linear-gradient(135deg, #123b67, #1769aa);
+      color: white;
+      padding: 22px 18px;
+      border-radius: 0 0 22px 22px;
+      box-shadow: 0 5px 15px rgba(0,0,0,.15);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 23px;
+      font-weight: 800;
+    }
+
+    .live {
+      background: rgba(255,255,255,.16);
+      padding: 7px 11px;
+      border-radius: 20px;
+      font-size: 12px;
     }
 
     .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 20px;
+      margin-top: 6px;
+      font-size: 13px;
+      opacity: .85;
+    }
+
+    /* ================= CONTENT ================= */
+
+    .content {
+      padding: 15px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 17px;
+      margin-bottom: 15px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.07);
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: #26384d;
+    }
+
+    /* ================= TOTE ID ================= */
+
+    .tote-box {
+      border: 2px solid #1769aa;
+      background: #f5faff;
+    }
+
+    .tote-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .tote-label span:first-child {
+      font-weight: 800;
+      color: #1769aa;
+    }
+
+    .required {
+      color: #d32f2f;
+      font-size: 12px;
+    }
+
+    #toteId {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 24px;
+      font-weight: 800;
+      color: #172033;
+      padding: 7px 0;
+    }
+
+    #toteId::placeholder {
+      color: #9aa5b1;
+      font-size: 17px;
+    }
+
+    /* ================= FORM ================= */
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
     }
 
     label {
       display: block;
-      margin-top: 14px;
+      font-size: 13px;
+      font-weight: 700;
       margin-bottom: 6px;
-      font-weight: bold;
-      color: #333;
+      color: #526171;
     }
 
     input {
       width: 100%;
-      padding: 13px;
-      border: 1px solid #bbb;
-      border-radius: 8px;
+      min-height: 48px;
+      padding: 12px;
+      border: 1px solid #d2d9e1;
+      border-radius: 10px;
+      background: #fafbfd;
       font-size: 16px;
+      color: #172033;
       outline: none;
     }
 
     input:focus {
-      border-color: #1976d2;
-      box-shadow: 0 0 4px rgba(25,118,210,0.3);
+      border-color: #1769aa;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(23,105,170,.10);
     }
 
-    .button-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 22px;
-    }
+    /* ================= BUTTONS ================= */
 
     button {
+      width: 100%;
+      min-height: 48px;
       border: none;
-      padding: 13px 8px;
-      border-radius: 8px;
+      border-radius: 10px;
       color: white;
       font-size: 15px;
-      font-weight: bold;
+      font-weight: 800;
       cursor: pointer;
+      transition: .15s;
     }
 
     button:active {
-      transform: scale(0.97);
+      transform: scale(.97);
+    }
+
+    .primary {
+      background: #16803c;
     }
 
     .blue {
@@ -88,11 +192,7 @@
     }
 
     .orange {
-      background: #f57c00;
-    }
-
-    .green {
-      background: #2e7d32;
+      background: #ef7d00;
     }
 
     .red {
@@ -107,303 +207,555 @@
       background: #008c95;
     }
 
+    .dark {
+      background: #344454;
+    }
+
+    /* ================= ACTION GRID ================= */
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    /* ================= MAIN SAVE ================= */
+
+    .save-button {
+      margin-top: 14px;
+      min-height: 54px;
+      font-size: 17px;
+    }
+
+    /* ================= WORKFLOW ================= */
+
+    .workflow {
+      display: grid;
+      gap: 10px;
+    }
+
+    .workflow button {
+      min-height: 54px;
+    }
+
+    /* ================= VRP ================= */
+
+    .vrp-card {
+      border-left: 5px solid #008c95;
+    }
+
+    /* ================= STATUS ================= */
+
     .status-box {
-      margin-top: 18px;
-      padding: 12px;
-      border-radius: 8px;
-      background: #f1f1f1;
-      text-align: center;
-      font-weight: bold;
       display: none;
+      padding: 13px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
     }
 
-    .complete-box {
-      margin-top: 20px;
-      padding-top: 15px;
-      border-top: 1px solid #ddd;
+    .success {
+      background: #e8f5e9;
+      color: #2e7d32;
     }
 
-    .full-button {
-      width: 100%;
-      margin-top: 10px;
+    .error {
+      background: #ffebee;
+      color: #c62828;
     }
 
-    @media (max-width: 450px) {
-      .button-grid {
+    .info {
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+
+    /* ================= FOOTER ================= */
+
+    .footer {
+      text-align: center;
+      color: #8a96a3;
+      font-size: 11px;
+      padding: 8px;
+    }
+
+    @media (max-width: 480px) {
+
+      .form-grid {
         grid-template-columns: 1fr;
       }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .action-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
-  <div class="container">
 
-    <h1>📦 TOTE PICKING FORM</h1>
+<div class="app">
+
+
+  <!-- ================= HEADER ================= -->
+
+  <div class="header">
+
+    <div class="header-top">
+
+      <div class="brand">
+        📦 TOTE PICKING
+      </div>
+
+      <div class="live">
+        ● ONLINE
+      </div>
+
+    </div>
 
     <div class="subtitle">
-      Permanent QR System
+      Permanent QR • Picking Management System
     </div>
 
-    <!-- FORM -->
+  </div>
 
-    <label for="toteId">Tote ID *</label>
-    <input
-      type="text"
-      id="toteId"
-      placeholder="Example: 428-00506"
-      autocomplete="off"
-    >
 
-    <label for="vendor">Vendor *</label>
-    <input
-      type="text"
-      id="vendor"
-      placeholder="Enter Vendor"
-      autocomplete="off"
-    >
+  <div class="content">
 
-    <label for="pickerName">Picker Name *</label>
-    <input
-      type="text"
-      id="pickerName"
-      placeholder="Enter Picker Name"
-      autocomplete="off"
-    >
 
-    <label for="tlNo">TL *</label>
-    <input
-      type="text"
-      id="tlNo"
-      placeholder="Enter TL"
-      autocomplete="off"
-    >
-
-    <label for="totalQty">Total Qty *</label>
-    <input
-      type="number"
-      id="totalQty"
-      placeholder="Enter Total Quantity"
-      min="0"
-    >
-
-    <label for="rejectQty">Reject Qty</label>
-    <input
-      type="number"
-      id="rejectQty"
-      placeholder="Enter Reject Quantity"
-      min="0"
-      value="0"
-    >
-
-    <!-- MANAGE TOTE -->
-
-    <div class="button-grid">
-
-      <button
-        class="blue"
-        onclick="viewData()">
-        👁 View Data
-      </button>
-
-      <button
-        class="orange"
-        onclick="editData()">
-        ✏️ Edit Data
-      </button>
-
-      <button
-        class="green"
-        onclick="saveData()">
-        💾 Save Data
-      </button>
-
-      <button
-        class="red"
-        onclick="resetTote()">
-        🔄 Reset Tote
-      </button>
-
-      <button
-        class="purple"
-        onclick="viewHistory()">
-        📜 View History
-      </button>
-
-    </div>
-
-    <!-- STATUS -->
+    <!-- ================= STATUS ================= -->
 
     <div
       id="statusBox"
       class="status-box">
     </div>
 
-    <!-- PICKING COMPLETE -->
 
-    <div class="complete-box">
+    <!-- ================= TOTE ================= -->
+
+    <div class="card tote-box">
+
+      <div class="tote-label">
+
+        <span>
+          TOTE ID
+        </span>
+
+        <span class="required">
+          REQUIRED *
+        </span>
+
+      </div>
+
+      <input
+        id="toteId"
+        type="text"
+        placeholder="Enter Tote ID  •  428-00506"
+        autocomplete="off">
+
+    </div>
+
+
+    <!-- ================= PICKING DETAILS ================= -->
+
+    <div class="card">
+
+      <div class="section-title">
+        👤 PICKING DETAILS
+      </div>
+
+
+      <div class="form-grid">
+
+
+        <div class="field">
+
+          <label>
+            Vendor *
+          </label>
+
+          <input
+            id="vendor"
+            type="text"
+            placeholder="Vendor"
+            autocomplete="off">
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Picker Name *
+          </label>
+
+          <input
+            id="pickerName"
+            type="text"
+            placeholder="Picker"
+            autocomplete="off">
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            TL *
+          </label>
+
+          <input
+            id="tlNo"
+            type="text"
+            placeholder="TL"
+            autocomplete="off">
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Total Qty *
+          </label>
+
+          <input
+            id="totalQty"
+            type="number"
+            min="0"
+            placeholder="0">
+
+        </div>
+
+
+        <div class="field full">
+
+          <label>
+            Reject Qty
+          </label>
+
+          <input
+            id="rejectQty"
+            type="number"
+            min="0"
+            value="0"
+            placeholder="0">
+
+        </div>
+
+
+      </div>
+
+
+      <!-- SAVE -->
 
       <button
-        class="green full-button"
-        onclick="pickingComplete()">
-        ✅ PICKING COMPLETE
-      </button>
+        class="primary save-button"
+        onclick="saveData()">
 
-      <button
-        class="cyan full-button"
-        onclick="vrpVerify()">
-        🔵 VRP VERIFY
+        💾 SAVE DATA
+
       </button>
 
     </div>
 
+
+    <!-- ================= MANAGE ================= -->
+
+    <div class="card">
+
+      <div class="section-title">
+        ⚙️ MANAGE TOTE
+      </div>
+
+
+      <div class="action-grid">
+
+
+        <button
+          class="blue"
+          onclick="viewData()">
+
+          👁 VIEW DATA
+
+        </button>
+
+
+        <button
+          class="orange"
+          onclick="editData()">
+
+          ✏️ EDIT DATA
+
+        </button>
+
+
+        <button
+          class="purple"
+          onclick="viewHistory()">
+
+          📜 HISTORY
+
+        </button>
+
+
+        <button
+          class="red"
+          onclick="resetTote()">
+
+          🔄 RESET TOTE
+
+        </button>
+
+
+      </div>
+
+    </div>
+
+
+    <!-- ================= PICKING WORKFLOW ================= -->
+
+    <div class="card">
+
+      <div class="section-title">
+        🚚 PICKING WORKFLOW
+      </div>
+
+
+      <div class="workflow">
+
+        <button
+          class="primary"
+          onclick="pickingComplete()">
+
+          ✅ PICKING COMPLETE
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================= VRP ================= -->
+
+    <div class="card vrp-card">
+
+      <div class="section-title">
+        🔵 VRP VERIFICATION
+      </div>
+
+
+      <label>
+        VRP Number
+      </label>
+
+      <input
+        id="vrp"
+        type="text"
+        placeholder="Enter VRP number"
+        autocomplete="off">
+
+
+      <button
+        class="cyan"
+        style="margin-top:10px;"
+        onclick="vrpVerify()">
+
+        🔵 VERIFY VRP
+
+      </button>
+
+    </div>
+
+
+    <div class="footer">
+
+      Permanent QR • Tote Picking Management
+
+    </div>
+
+
   </div>
+
+</div>
+
 
 
 <script>
 
-  /*
-   * IMPORTANT
-   * ------------------------------------------------
-   * Yahan apna Google Apps Script Web App URL paste karo.
-   */
 
-  const WEB_APP_URL =
-    "https://script.google.com/macros/s/AKfycby7aULcsaCK7fs2TDPlYyxguO4k5JtnydUUCizu9fMpYDZ-5b4o_Nx0xZ3B7SuWfg/exec";
+// =====================================================
+// GOOGLE APPS SCRIPT URL
+// =====================================================
+
+const WEB_APP_URL =
+"YOUR_GOOGLE_SCRIPT_WEB_APP_URL";
 
 
-  // ---------------------------------------------
-  // STATUS MESSAGE
-  // ---------------------------------------------
+// =====================================================
+// STATUS
+// =====================================================
 
-  function showStatus(message, success = true) {
+function showStatus(message, type="info") {
 
-    const box = document.getElementById("statusBox");
+  const box =
+    document.getElementById("statusBox");
 
-    box.style.display = "block";
+  box.style.display = "block";
 
-    box.style.background =
-      success ? "#e8f5e9" : "#ffebee";
+  box.className =
+    "status-box " + type;
 
-    box.style.color =
-      success ? "#2e7d32" : "#c62828";
+  box.innerText = message;
 
-    box.innerText = message;
+}
+
+
+// =====================================================
+// FORM DATA
+// =====================================================
+
+function getData() {
+
+  return {
+
+    toteId:
+      document.getElementById("toteId")
+      .value.trim(),
+
+    vendor:
+      document.getElementById("vendor")
+      .value.trim(),
+
+    pickerName:
+      document.getElementById("pickerName")
+      .value.trim(),
+
+    tlNo:
+      document.getElementById("tlNo")
+      .value.trim(),
+
+    totalQty:
+      document.getElementById("totalQty")
+      .value.trim(),
+
+    rejectQty:
+      document.getElementById("rejectQty")
+      .value.trim() || "0",
+
+    vrp:
+      document.getElementById("vrp")
+      .value.trim()
+
+  };
+
+}
+
+
+// =====================================================
+// VALIDATION
+// =====================================================
+
+function validateData() {
+
+  const data = getData();
+
+
+  if (!data.toteId) {
+
+    alert("⚠️ Tote ID required");
+
+    document.getElementById("toteId").focus();
+
+    return false;
   }
 
 
-  // ---------------------------------------------
-  // GET FORM DATA
-  // ---------------------------------------------
+  if (!data.vendor) {
 
-  function getFormData() {
+    alert("⚠️ Vendor required");
 
-    return {
+    document.getElementById("vendor").focus();
 
-      toteId:
-        document.getElementById("toteId").value.trim(),
-
-      vendor:
-        document.getElementById("vendor").value.trim(),
-
-      pickerName:
-        document.getElementById("pickerName").value.trim(),
-
-      tlNo:
-        document.getElementById("tlNo").value.trim(),
-
-      totalQty:
-        document.getElementById("totalQty").value.trim(),
-
-      rejectQty:
-        document.getElementById("rejectQty").value.trim(),
-
-      status: "Saved"
-    };
+    return false;
   }
 
 
-  // ---------------------------------------------
-  // VALIDATION
-  // ---------------------------------------------
+  if (!data.pickerName) {
 
-  function validateForm() {
+    alert("⚠️ Picker Name required");
 
-    const data = getFormData();
+    document.getElementById("pickerName").focus();
 
-    if (!data.toteId) {
-
-      alert("⚠️ Please enter Tote ID");
-
-      document.getElementById("toteId").focus();
-
-      return false;
-    }
-
-    if (!data.vendor) {
-
-      alert("⚠️ Vendor required");
-
-      document.getElementById("vendor").focus();
-
-      return false;
-    }
-
-    if (!data.pickerName) {
-
-      alert("⚠️ Picker Name required");
-
-      document.getElementById("pickerName").focus();
-
-      return false;
-    }
-
-    if (!data.tlNo) {
-
-      alert("⚠️ TL required");
-
-      document.getElementById("tlNo").focus();
-
-      return false;
-    }
-
-    if (!data.totalQty) {
-
-      alert("⚠️ Total Qty required");
-
-      document.getElementById("totalQty").focus();
-
-      return false;
-    }
-
-    return true;
+    return false;
   }
 
 
-  // ---------------------------------------------
-  // VIEW DATA
-  // ---------------------------------------------
+  if (!data.tlNo) {
 
-  async function viewData() {
+    alert("⚠️ TL required");
 
-    const toteId =
-      document.getElementById("toteId").value.trim();
+    document.getElementById("tlNo").focus();
 
-    if (!toteId) {
+    return false;
+  }
 
-      alert("⚠️ पहले Tote ID डालें");
 
-      document.getElementById("toteId").focus();
+  if (!data.totalQty) {
 
-      return;
-    }
+    alert("⚠️ Total Qty required");
 
-    showStatus("🔄 Google Sheet से data देख रहे हैं...");
+    document.getElementById("totalQty").focus();
 
-    try {
+    return false;
+  }
 
-      const response = await fetch(WEB_APP_URL, {
+
+  return true;
+
+}
+
+
+// =====================================================
+// VIEW DATA
+// =====================================================
+
+async function viewData() {
+
+  const toteId =
+    document.getElementById("toteId")
+    .value.trim();
+
+
+  if (!toteId) {
+
+    alert("⚠️ पहले Tote ID डालें");
+
+    return;
+  }
+
+
+  showStatus(
+    "🔄 Current data loading...",
+    "info"
+  );
+
+
+  try {
+
+    const response =
+      await fetch(WEB_APP_URL, {
 
         method: "POST",
 
@@ -417,91 +769,113 @@
 
       });
 
-      const result = await response.json();
 
-      if (result.success) {
+    const result =
+      await response.json();
 
-        const data = result.data;
 
-        document.getElementById("toteId").value =
-          data.toteId || "";
-
-        document.getElementById("vendor").value =
-          data.vendor || "";
-
-        document.getElementById("pickerName").value =
-          data.pickerName || "";
-
-        document.getElementById("tlNo").value =
-          data.tlNo || "";
-
-        document.getElementById("totalQty").value =
-          data.totalQty || "";
-
-        document.getElementById("rejectQty").value =
-          data.rejectQty || 0;
-
-        showStatus("✅ Data मिल गया");
-
-      } else {
-
-        showStatus(
-          "ℹ️ इस Tote ID का कोई saved data नहीं मिला। नया data भर सकते हैं।",
-          false
-        );
-
-      }
-
-    } catch (error) {
+    if (!result.success) {
 
       showStatus(
-        "❌ Google Sheet connection नहीं हो रहा है.",
-        false
+        "ℹ️ इस Tote का current data नहीं मिला।",
+        "error"
       );
-
-      console.error(error);
-    }
-  }
-
-
-  // ---------------------------------------------
-  // EDIT DATA
-  // ---------------------------------------------
-
-  function editData() {
-
-    /*
-     * अब fields पहले से editable हैं।
-     *
-     * इसलिए Edit Data button केवल
-     * confirmation के लिए रखा गया है।
-     */
-
-    document.getElementById("toteId").focus();
-
-    showStatus("✏️ Form editing के लिए ready है");
-
-  }
-
-
-  // ---------------------------------------------
-  // SAVE DATA
-  // ---------------------------------------------
-
-  async function saveData() {
-
-    if (!validateForm()) {
 
       return;
     }
 
-    const data = getFormData();
 
-    showStatus("💾 Data Google Sheet में save हो रहा है...");
+    const d =
+      result.data;
 
-    try {
 
-      const response = await fetch(WEB_APP_URL, {
+    document.getElementById("toteId").value =
+      d.toteId || "";
+
+    document.getElementById("vendor").value =
+      d.vendor || "";
+
+    document.getElementById("pickerName").value =
+      d.pickerName || "";
+
+    document.getElementById("tlNo").value =
+      d.tlNo || "";
+
+    document.getElementById("totalQty").value =
+      d.totalQty || "";
+
+    document.getElementById("rejectQty").value =
+      d.rejectQty || "0";
+
+    document.getElementById("vrp").value =
+      d.vrp || "";
+
+
+    showStatus(
+      "✅ Current data loaded",
+      "success"
+    );
+
+
+  } catch(error) {
+
+    showStatus(
+      "❌ Google Sheet connection failed",
+      "error"
+    );
+
+    console.error(error);
+
+  }
+
+}
+
+
+// =====================================================
+// EDIT
+// =====================================================
+
+function editData() {
+
+  document
+    .getElementById("toteId")
+    .focus();
+
+
+  showStatus(
+    "✏️ Form editing के लिए ready है",
+    "info"
+  );
+
+}
+
+
+// =====================================================
+// SAVE
+// =====================================================
+
+async function saveData() {
+
+  if (!validateData()) {
+
+    return;
+  }
+
+
+  const data =
+    getData();
+
+
+  showStatus(
+    "💾 Saving data...",
+    "info"
+  );
+
+
+  try {
+
+    const response =
+      await fetch(WEB_APP_URL, {
 
         method: "POST",
 
@@ -520,6 +894,8 @@
           totalQty: data.totalQty,
 
           rejectQty: data.rejectQty,
+
+          vrp: data.vrp,
 
           status: "Saved"
 
@@ -527,191 +903,508 @@
 
       });
 
-      const result = await response.json();
 
-      if (result.success) {
+    const result =
+      await response.json();
 
-        showStatus(
-          "✅ Data successfully saved!"
-        );
 
-      } else {
-
-        showStatus(
-          "❌ Data save failed: " +
-          result.message,
-          false
-        );
-
-      }
-
-    } catch (error) {
+    if (result.success) {
 
       showStatus(
-        "❌ Google Sheet connection नहीं हो रहा है.",
-        false
+        "✅ Data saved successfully",
+        "success"
       );
 
-      console.error(error);
-    }
-  }
+    } else {
 
-
-  // ---------------------------------------------
-  // RESET TOTE
-  // ---------------------------------------------
-
-  function resetTote() {
-
-    const confirmReset =
-      confirm(
-        "⚠️ क्या आप इस Tote को Reset करना चाहते हैं?\n\n" +
-        "Reset function अगले step में History में data save करके current data clear करेगा."
+      showStatus(
+        "❌ " + result.message,
+        "error"
       );
 
-    if (!confirmReset) {
-
-      return;
     }
 
-    alert(
-      "ℹ️ Reset system अभी अगले step में activate किया जाएगा."
-    );
-  }
 
-
-  // ---------------------------------------------
-  // VIEW HISTORY
-  // ---------------------------------------------
-
-  function viewHistory() {
-
-    const toteId =
-      document.getElementById("toteId").value.trim();
-
-    if (!toteId) {
-
-      alert("⚠️ पहले Tote ID डालें");
-
-      return;
-    }
-
-    alert(
-      "📜 History function अगले step में activate किया जाएगा."
-    );
-  }
-
-
-  // ---------------------------------------------
-  // PICKING COMPLETE
-  // ---------------------------------------------
-
-  async function pickingComplete() {
-
-    if (!validateForm()) {
-
-      return;
-    }
-
-    const confirmComplete =
-      confirm(
-        "क्या Picking Complete करना है?"
-      );
-
-    if (!confirmComplete) {
-
-      return;
-    }
-
-    const data = getFormData();
+  } catch(error) {
 
     showStatus(
-      "⏳ Picking Complete save हो रहा है..."
+      "❌ Google Sheet connection failed",
+      "error"
     );
 
-    try {
+    console.error(error);
 
-      const response = await fetch(WEB_APP_URL, {
+  }
+
+}
+
+
+// =====================================================
+// PICKING COMPLETE
+// =====================================================
+
+async function pickingComplete() {
+
+  if (!validateData()) {
+
+    return;
+  }
+
+
+  if (
+    !confirm(
+      "क्या Picking Complete करना है?"
+    )
+  ) {
+
+    return;
+  }
+
+
+  const data =
+    getData();
+
+
+  showStatus(
+    "⏳ Completing picking...",
+    "info"
+  );
+
+
+  try {
+
+    const response =
+      await fetch(WEB_APP_URL, {
 
         method: "POST",
 
         body: JSON.stringify({
 
-          action: "save",
+          action: "pickingComplete",
 
-          toteId: data.toteId,
-
-          vendor: data.vendor,
-
-          pickerName: data.pickerName,
-
-          tlNo: data.tlNo,
-
-          totalQty: data.totalQty,
-
-          rejectQty: data.rejectQty,
-
-          status: "Picking Complete"
+          toteId: data.toteId
 
         })
 
       });
 
-      const result = await response.json();
 
-      if (result.success) {
+    const result =
+      await response.json();
 
-        showStatus(
-          "✅ PICKING COMPLETE!"
-        );
 
-        alert(
-          "✅ Picking Complete हो गया.\n\nअब VRP Verify किया जा सकता है."
-        );
-
-      } else {
-
-        showStatus(
-          "❌ Picking Complete failed.",
-          false
-        );
-
-      }
-
-    } catch (error) {
+    if (result.success) {
 
       showStatus(
-        "❌ Google Sheet connection नहीं हो रहा है.",
-        false
+        "✅ PICKING COMPLETE",
+        "success"
       );
 
-      console.error(error);
+      alert(
+        "✅ Picking Complete हो गया.\n\nअब VRP Verify करें."
+      );
+
+
+    } else {
+
+      showStatus(
+        "❌ " + result.message,
+        "error"
+      );
+
     }
+
+
+  } catch(error) {
+
+    showStatus(
+      "❌ Connection failed",
+      "error"
+    );
+
+  }
+
+}
+
+
+// =====================================================
+// VRP VERIFY
+// =====================================================
+
+async function vrpVerify() {
+
+  const data =
+    getData();
+
+
+  if (!data.toteId) {
+
+    alert(
+      "⚠️ Tote ID required"
+    );
+
+    return;
   }
 
 
-  // ---------------------------------------------
-  // VRP VERIFY
-  // ---------------------------------------------
+  if (!data.vrp) {
 
-  function vrpVerify() {
+    alert(
+      "⚠️ VRP number enter करें"
+    );
 
-    const toteId =
-      document.getElementById("toteId").value.trim();
+    document
+      .getElementById("vrp")
+      .focus();
 
-    if (!toteId) {
+    return;
+  }
 
-      alert("⚠️ पहले Tote ID डालें");
+
+  if (
+    !confirm(
+      "क्या VRP verify करना है?"
+    )
+  ) {
+
+    return;
+  }
+
+
+  showStatus(
+    "🔵 Verifying VRP...",
+    "info"
+  );
+
+
+  try {
+
+    const response =
+      await fetch(WEB_APP_URL, {
+
+        method: "POST",
+
+        body: JSON.stringify({
+
+          action: "vrpVerify",
+
+          toteId: data.toteId,
+
+          vrp: data.vrp
+
+        })
+
+      });
+
+
+    const result =
+      await response.json();
+
+
+    if (result.success) {
+
+      showStatus(
+        "✅ VRP VERIFIED",
+        "success"
+      );
+
+      alert(
+        "✅ VRP successfully verified."
+      );
+
+
+    } else {
+
+      showStatus(
+        "❌ " + result.message,
+        "error"
+      );
+
+    }
+
+
+  } catch(error) {
+
+    showStatus(
+      "❌ Connection failed",
+      "error"
+    );
+
+  }
+
+}
+
+
+// =====================================================
+// RESET TOTE
+// =====================================================
+
+async function resetTote() {
+
+  const data =
+    getData();
+
+
+  if (!data.toteId) {
+
+    alert(
+      "⚠️ Tote ID required"
+    );
+
+    return;
+  }
+
+
+  if (
+    !confirm(
+      "⚠️ RESET TOTE?\n\n" +
+      "Current data History में permanently save होगा और current data clear हो जाएगा."
+    )
+  ) {
+
+    return;
+  }
+
+
+  showStatus(
+    "🔄 Resetting Tote...",
+    "info"
+  );
+
+
+  try {
+
+    const response =
+      await fetch(WEB_APP_URL, {
+
+        method: "POST",
+
+        body: JSON.stringify({
+
+          action: "reset",
+
+          toteId: data.toteId
+
+        })
+
+      });
+
+
+    const result =
+      await response.json();
+
+
+    if (result.success) {
+
+      clearForm();
+
+
+      showStatus(
+        "✅ Tote Reset Successfully",
+        "success"
+      );
+
+
+      alert(
+        "✅ Tote reset हो गया.\n\n" +
+        "पुराना data History में सुरक्षित है."
+      );
+
+
+    } else {
+
+      showStatus(
+        "❌ " + result.message,
+        "error"
+      );
+
+    }
+
+
+  } catch(error) {
+
+    showStatus(
+      "❌ Connection failed",
+      "error"
+    );
+
+  }
+
+}
+
+
+// =====================================================
+// HISTORY
+// =====================================================
+
+async function viewHistory() {
+
+  const toteId =
+    document.getElementById("toteId")
+    .value.trim();
+
+
+  if (!toteId) {
+
+    alert(
+      "⚠️ Tote ID required"
+    );
+
+    return;
+  }
+
+
+  showStatus(
+    "📜 Loading history...",
+    "info"
+  );
+
+
+  try {
+
+    const response =
+      await fetch(WEB_APP_URL, {
+
+        method: "POST",
+
+        body: JSON.stringify({
+
+          action: "history",
+
+          toteId: toteId
+
+        })
+
+      });
+
+
+    const result =
+      await response.json();
+
+
+    if (
+      !result.success ||
+      !result.data.history.length
+    ) {
+
+      alert(
+        "📜 इस Tote की कोई History नहीं मिली."
+      );
 
       return;
     }
 
-    alert(
-      "🔵 VRP Verify system अगले step में activate किया जाएगा."
+
+    let text =
+      "📜 TOTE HISTORY\n\n";
+
+
+    result.data.history.forEach(
+      function(item, index) {
+
+        text +=
+          "━━━━━━━━━━━━━━\n";
+
+        text +=
+          "Cycle: " +
+          (index + 1) +
+          "\n";
+
+        text +=
+          "Tote: " +
+          item.toteId +
+          "\n";
+
+        text +=
+          "Vendor: " +
+          item.vendor +
+          "\n";
+
+        text +=
+          "Picker: " +
+          item.pickerName +
+          "\n";
+
+        text +=
+          "TL: " +
+          item.tlNo +
+          "\n";
+
+        text +=
+          "Total Qty: " +
+          item.totalQty +
+          "\n";
+
+        text +=
+          "Reject Qty: " +
+          item.rejectQty +
+          "\n";
+
+        text +=
+          "Status: " +
+          item.status +
+          "\n";
+
+        text +=
+          "VRP: " +
+          item.vrp +
+          "\n";
+
+        text +=
+          "Action: " +
+          item.action +
+          "\n";
+
+      }
     );
+
+
+    alert(text);
+
+
+    showStatus(
+      "✅ History loaded",
+      "success"
+    );
+
+
+  } catch(error) {
+
+    showStatus(
+      "❌ History connection failed",
+      "error"
+    );
+
   }
+
+}
+
+
+// =====================================================
+// CLEAR FORM
+// =====================================================
+
+function clearForm() {
+
+  document.getElementById("toteId").value = "";
+
+  document.getElementById("vendor").value = "";
+
+  document.getElementById("pickerName").value = "";
+
+  document.getElementById("tlNo").value = "";
+
+  document.getElementById("totalQty").value = "";
+
+  document.getElementById("rejectQty").value = "0";
+
+  document.getElementById("vrp").value = "";
+
+}
 
 </script>
 
+
 </body>
+
 </html>
