@@ -229,9 +229,68 @@
       alert("Edit Data will be connected in the next step.");
     }
 
-    function saveData() {
-      alert("https://script.google.com/macros/s/AKfycby7aULcsaCK7fs2TDPlYyxguO4k5JtnydUUCizu9fMpYDZ-5b4o_Nx0xZ3B7SuWfg/exec");
+    async function saveData() {
+
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby7aULcsaCK7fs2TDPlYyxguO4k5JtnydUUCizu9fMpYDZ-5b4o_Nx0xZ3B7SuWfg/exec";
+
+  const data = {
+    toteId: document.getElementById("toteId").value.trim(),
+    vendor: document.getElementById("vendor").value.trim(),
+    pickerName: document.getElementById("pickerName").value.trim(),
+    tlNo: document.getElementById("tlNo").value.trim(),
+    totalQty: document.getElementById("totalQty").value.trim(),
+    rejectQty: document.getElementById("rejectQty").value.trim(),
+    status: "Saved"
+  };
+
+  if (!data.toteId) {
+    alert("⚠️ Please enter Tote ID");
+    return;
+  }
+
+  if (!data.vendor) {
+    alert("⚠️ Please enter Vendor");
+    return;
+  }
+
+  if (!data.pickerName) {
+    alert("⚠️ Please enter Picker Name");
+    return;
+  }
+
+  if (!data.totalQty) {
+    alert("⚠️ Please enter Total Qty");
+    return;
+  }
+
+  try {
+
+    const response = await fetch(WEB_APP_URL, {
+      method: "POST",
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+
+      alert("✅ Data saved successfully!");
+
+    } else {
+
+      alert("❌ Data save failed.\n\n" + result.message);
+
     }
+
+  } catch (error) {
+
+    alert(
+      "❌ Google Sheet connection failed.\n\n" +
+      error.message
+    );
+
+  }
+}
 
     function resetTote() {
 
