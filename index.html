@@ -1207,4 +1207,175 @@
 
   async function resetTote() {
 
-    
+    const toteId =
+      toteInput.value.trim();
+
+    if (!toteId) {
+
+      showStatus(
+        "Tote ID required.",
+        "errorMsg"
+      );
+
+      return;
+    }
+
+
+    const confirmReset =
+      confirm(
+        "Kya aap is Tote ko Complete/Reset karna chahte hain?\n\nCurrent data History mein save ho jayega aur Tote next picking ke liye reusable ho jayega."
+      );
+
+
+    if (!confirmReset) {
+      return;
+    }
+
+
+    const button =
+      document.getElementById("resetBtn");
+
+    lockButton(
+      button,
+      "⏳ Resetting..."
+    );
+
+    showStatus(
+      "Tote reset ho raha hai...",
+      "loadingMsg"
+    );
+
+
+    try {
+
+      const result =
+        await apiRequest({
+
+          action: "reset",
+
+          toteId: toteId
+        });
+
+
+      if (!result.success) {
+
+        throw new Error(
+          result.message ||
+          "Reset failed."
+        );
+      }
+
+
+      clientCache.delete(
+        toteId
+      );
+
+
+      vendorInput.value = "";
+      pickerInput.value = "";
+      tlInput.value = "";
+      qtyInput.value = "";
+      rejectInput.value = "0";
+      vrpInput.value = "";
+
+
+      detailsCard.classList.remove(
+        "show"
+      );
+
+      actionsCard.classList.remove(
+        "show"
+      );
+
+
+      showStatus(
+        "✅ Tote reset successfully. Ab ye Tote next picking ke liye ready hai.",
+        "successMsg"
+      );
+
+
+    } catch (error) {
+
+      showStatus(
+        "❌ " + error.message,
+        "errorMsg"
+      );
+
+    } finally {
+
+      unlockButton(button);
+    }
+  }
+
+
+  /* =====================================================
+     QR AUTO LOAD
+     ===================================================== */
+
+  function autoLoadQR() {
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const tote =
+      params.get("tote");
+
+
+    if (tote) {
+
+      toteInput.value =
+        tote.trim();
+
+      loadTote();
+    }
+  }
+
+
+  /* =====================================================
+     ESCAPE HTML
+     ===================================================== */
+
+  function escapeHTML(value) {
+
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+
+  /* =====================================================
+     ENTER KEY
+     ===================================================== */
+
+  toteInput.addEventListener(
+    "keydown",
+    function(event) {
+
+      if (event.key === "Enter") {
+
+        event.preventDefault();
+
+        loadTote();
+      }
+    }
+  );
+
+
+  /* =====================================================
+     START
+     ===================================================== */
+
+  window.addEventListener(
+    "load",
+    autoLoadQR
+  );
+
+</script>
+
+</body>
+</html>
