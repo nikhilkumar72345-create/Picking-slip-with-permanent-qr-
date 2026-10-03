@@ -1,681 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0f172a">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 
 <title>Tote Picking Management</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+
+* {
+  box-sizing: border-box;
 }
 
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f1f5f9;
-  color:#0f172a;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f6fa;
+  color: #172033;
 }
 
-.header{
-  background:linear-gradient(135deg,#0f172a,#1e3a8a);
-  color:white;
-  padding:20px 16px;
-  box-shadow:0 3px 12px rgba(0,0,0,.15);
+.header {
+  background: #172033;
+  color: white;
+  padding: 16px;
+  text-align: center;
+  font-size: 21px;
+  font-weight: bold;
 }
 
-.header-inner{
-  max-width:700px;
-  margin:auto;
+.container {
+  max-width: 650px;
+  margin: auto;
+  padding: 12px;
 }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
-.logo{
-  width:44px;
-  height:44px;
-  border-radius:12px;
-  background:rgba(255,255,255,.15);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:24px;
+.card h2 {
+  margin-top: 0;
+  font-size: 18px;
 }
 
-.header h1{
-  margin:0;
-  font-size:21px;
+label {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 14px;
 }
 
-.header p{
-  margin:3px 0 0;
-  font-size:12px;
-  opacity:.75;
+input {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ccd3dd;
+  border-radius: 9px;
+  font-size: 16px;
+  outline: none;
 }
 
-.container{
-  max-width:700px;
-  margin:auto;
-  padding:16px;
+input:focus {
+  border-color: #172033;
 }
 
-.card{
-  background:white;
-  border-radius:18px;
-  padding:18px;
-  margin-bottom:15px;
-  box-shadow:0 5px 18px rgba(15,23,42,.07);
-  border:1px solid #e2e8f0;
+button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 9px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.section-head{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:16px;
+button:disabled {
+  opacity: 0.55;
 }
 
-.section-icon{
-  width:38px;
-  height:38px;
-  border-radius:10px;
-  background:#eff6ff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:19px;
+.primary {
+  background: #172033;
+  color: white;
 }
 
-.section-title{
-  font-size:17px;
-  font-weight:700;
+.success {
+  background: #16803c;
+  color: white;
 }
 
-.section-subtitle{
-  font-size:12px;
-  color:#64748b;
-  margin-top:2px;
+.warning {
+  background: #d98b00;
+  color: white;
 }
 
-.status{
-  display:none;
-  padding:13px 14px;
-  border-radius:12px;
-  margin-bottom:15px;
-  font-size:14px;
-  font-weight:600;
+.danger {
+  background: #c62828;
+  color: white;
 }
 
-.status.show{
-  display:block;
+.secondary {
+  background: #e8edf3;
+  color: #172033;
 }
 
-.status.success{
-  background:#dcfce7;
-  color:#166534;
+.status {
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  display: none;
+  font-size: 14px;
 }
 
-.status.error{
-  background:#fee2e2;
-  color:#991b1b;
+.details {
+  background: #f7f9fc;
+  border-radius: 10px;
+  padding: 12px;
+  line-height: 1.8;
 }
 
-.status.info{
-  background:#dbeafe;
-  color:#1e40af;
+.value {
+  font-weight: bold;
 }
 
-.tote-input-wrap{
-  position:relative;
+.footer {
+  text-align: center;
+  padding: 15px;
+  color: #777;
+  font-size: 12px;
 }
 
-.tote-input-wrap input{
-  padding-right:45px;
+.hidden {
+  display: none !important;
 }
 
-.scan-icon{
-  position:absolute;
-  right:14px;
-  top:50%;
-  transform:translateY(-50%);
-  font-size:20px;
+.loading {
+  text-align: center;
+  padding: 12px;
+  color: #555;
 }
 
-label{
-  display:block;
-  margin:14px 0 6px;
-  font-size:13px;
-  font-weight:700;
-  color:#334155;
-}
-
-input{
-  width:100%;
-  padding:13px 14px;
-  border:1px solid #cbd5e1;
-  border-radius:11px;
-  background:#fff;
-  font-size:16px;
-  color:#0f172a;
-  outline:none;
-}
-
-input:focus{
-  border-color:#2563eb;
-  box-shadow:0 0 0 3px rgba(37,99,235,.10);
-}
-
-input[readonly]{
-  background:#f8fafc;
-}
-
-button{
-  width:100%;
-  border:0;
-  border-radius:11px;
-  padding:14px;
-  margin-top:11px;
-  font-size:15px;
-  font-weight:700;
-  cursor:pointer;
-}
-
-button:active{
-  transform:scale(.98);
-}
-
-button:disabled{
-  opacity:.55;
-}
-
-.primary{
-  background:#2563eb;
-  color:white;
-}
-
-.primary:hover{
-  background:#1d4ed8;
-}
-
-.view-btn{
-  background:#f1f5f9;
-  color:#0f172a;
-  border:1px solid #cbd5e1;
-}
-
-.success-btn{
-  background:#16a34a;
-  color:white;
-}
-
-.warning-btn{
-  background:#f59e0b;
-  color:white;
-}
-
-.danger-btn{
-  background:#dc2626;
-  color:white;
-}
-
-.tote-banner{
-  background:linear-gradient(135deg,#eff6ff,#eef2ff);
-  border:1px solid #bfdbfe;
-  border-radius:14px;
-  padding:15px;
-  text-align:center;
-  margin-bottom:16px;
-}
-
-.tote-label{
-  color:#64748b;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:1px;
-}
-
-.tote-id{
-  color:#1e3a8a;
-  font-size:25px;
-  font-weight:800;
-  margin-top:4px;
-  word-break:break-all;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.info{
-  background:#f8fafc;
-  border:1px solid #e2e8f0;
-  border-radius:12px;
-  padding:12px;
-}
-
-.info small{
-  display:block;
-  color:#64748b;
-  font-size:11px;
-  margin-bottom:5px;
-  font-weight:600;
-}
-
-.info strong{
-  display:block;
-  font-size:15px;
-  word-break:break-word;
-}
-
-.divider{
-  height:1px;
-  background:#e2e8f0;
-  margin:17px 0;
-}
-
-.hidden{
-  display:none!important;
-}
-
-.footer{
-  text-align:center;
-  color:#94a3b8;
-  font-size:11px;
-  padding:5px 0 20px;
-}
-
-@media(max-width:500px){
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  .container{
-    padding:12px;
-  }
-
-  .card{
-    padding:15px;
-  }
-}
 </style>
+
 </head>
 
 <body>
 
-<header class="header">
-  <div class="header-inner">
-    <div class="brand">
-      <div class="logo">📦</div>
+<div class="header">
+  📦 Tote Picking Management
+</div>
 
-      <div>
-        <h1>Tote Picking Management</h1>
-        <p>Permanent Tote QR • Picking • VRP • Verification</p>
-      </div>
-    </div>
-  </div>
-</header>
+<div class="container">
 
+  <!-- TOTE CONTROL -->
 
-<main class="container">
+  <div class="card">
 
-<div id="statusBox" class="status"></div>
+    <h2>🔎 Tote Control</h2>
 
-
-<!-- ==============================
-     TOTE CONTROL
-================================ -->
-
-<section class="card">
-
-  <div class="section-head">
-
-    <div class="section-icon">🔎</div>
-
-    <div>
-      <div class="section-title">
-        Tote Control
-      </div>
-
-      <div class="section-subtitle">
-        Scan or enter permanent Tote ID
-      </div>
-    </div>
-
-  </div>
-
-
-  <label>Tote ID</label>
-
-  <div class="tote-input-wrap">
+    <label>Tote ID</label>
 
     <input
       id="toteId"
       type="text"
-      placeholder="Scan Tote QR"
+      placeholder="Scan / Enter Tote ID"
       autocomplete="off"
-      autofocus
     >
 
-    <span class="scan-icon">▣</span>
+    <button
+      id="loadBtn"
+      class="primary"
+      onclick="loadTote()"
+    >
+      START / LOAD TOTE
+    </button>
 
-  </div>
-
-
-  <button
-    class="primary"
-    id="loadBtn"
-    onclick="loadTote()">
-
-    ▶ START / LOAD TOTE
-
-  </button>
-
-
-  <button
-    class="view-btn"
-    id="viewBtn"
-    onclick="viewTote()">
-
-    👁️ VIEW TOTE
-
-  </button>
-
-</section>
-
-
-<!-- ==============================
-     PICKING FORM
-================================ -->
-
-<section
-  id="pickingCard"
-  class="card hidden">
-
-  <div class="section-head">
-
-    <div class="section-icon">📝</div>
-
-    <div>
-      <div class="section-title">
-        Picking Form
-      </div>
-
-      <div class="section-subtitle">
-        Enter picking information
-      </div>
-    </div>
-
-  </div>
-
-
-  <div class="tote-banner">
-
-    <div class="tote-label">
-      ACTIVE TOTE
-    </div>
+    <button
+      id="viewBtn"
+      class="secondary"
+      onclick="viewTote()"
+    >
+      👁 VIEW TOTE
+    </button>
 
     <div
-      id="displayTote"
-      class="tote-id">
-      ---
-    </div>
+      id="statusBox"
+      class="status"
+    ></div>
 
   </div>
 
 
-  <label>Vendor</label>
+  <!-- PICKING FORM -->
 
-  <input
-    id="vendor"
-    type="text"
-    placeholder="Enter vendor name"
+  <div
+    id="formCard"
+    class="card hidden"
   >
 
+    <h2>📝 Picking Form</h2>
 
-  <label>Picker Name</label>
+    <label>Vendor</label>
 
-  <input
-    id="pickerName"
-    type="text"
-    placeholder="Enter picker name"
-  >
+    <input
+      id="vendor"
+      type="text"
+      autocomplete="off"
+    >
 
+    <label>Picker Name</label>
 
-  <label>TL</label>
+    <input
+      id="pickerName"
+      type="text"
+      autocomplete="off"
+    >
 
-  <input
-    id="tlNo"
-    type="text"
-    placeholder="Enter TL name / number"
-  >
+    <label>TL</label>
 
+    <input
+      id="tlNo"
+      type="text"
+      autocomplete="off"
+    >
 
-  <div class="grid">
+    <label>Total Quantity</label>
 
-    <div>
+    <input
+      id="totalQty"
+      type="number"
+      inputmode="numeric"
+    >
 
-      <label>Total Quantity</label>
+    <label>Reject Quantity</label>
 
-      <input
-        id="totalQty"
-        type="number"
-        min="0"
-        placeholder="0"
-      >
+    <input
+      id="rejectQty"
+      type="number"
+      inputmode="numeric"
+      value="0"
+    >
 
-    </div>
+    <button
+      id="saveBtn"
+      class="primary"
+      onclick="saveData()"
+    >
+      💾 SAVE PICKING
+    </button>
 
-
-    <div>
-
-      <label>Reject Quantity</label>
-
-      <input
-        id="rejectQty"
-        type="number"
-        min="0"
-        value="0"
-        placeholder="0"
-      >
-
-    </div>
+    <button
+      id="completeBtn"
+      class="success"
+      onclick="completePicking()"
+    >
+      ✅ PICKING COMPLETE
+    </button>
 
   </div>
 
 
-  <button
-    class="primary"
-    onclick="saveData()">
+  <!-- VRP -->
 
-    💾 SAVE PICKING
-
-  </button>
-
-
-  <button
-    class="success-btn"
-    onclick="completePicking()">
-
-    ✅ PICKING COMPLETE
-
-  </button>
-
-</section>
-
-
-<!-- ==============================
-     VRP
-================================ -->
-
-<section
-  id="vrpCard"
-  class="card hidden">
-
-  <div class="section-head">
-
-    <div class="section-icon">🔐</div>
-
-    <div>
-      <div class="section-title">
-        VRP Verification
-      </div>
-
-      <div class="section-subtitle">
-        Verify VRP after picking completion
-      </div>
-    </div>
-
-  </div>
-
-
-  <label>VRP Number</label>
-
-  <input
-    id="vrp"
-    type="text"
-    placeholder="Enter VRP"
+  <div
+    id="vrpCard"
+    class="card hidden"
   >
 
+    <h2>🔐 VRP Verification</h2>
 
-  <button
-    class="warning-btn"
-    onclick="verifyVRP()">
+    <label>VRP</label>
 
-    🔐 VERIFY VRP
+    <input
+      id="vrp"
+      type="text"
+      placeholder="Enter VRP"
+      autocomplete="off"
+    >
 
-  </button>
-
-</section>
-
-
-<!-- ==============================
-     DETAILS
-================================ -->
-
-<section
-  id="detailsCard"
-  class="card hidden">
-
-  <div class="section-head">
-
-    <div class="section-icon">👁️</div>
-
-    <div>
-      <div class="section-title">
-        Tote Details
-      </div>
-
-      <div class="section-subtitle">
-        Read-only current Tote information
-      </div>
-    </div>
+    <button
+      id="vrpBtn"
+      class="warning"
+      onclick="verifyVRP()"
+    >
+      ✔ VERIFY VRP
+    </button>
 
   </div>
 
 
-  <div class="tote-banner">
+  <!-- DETAILS -->
 
-    <div class="tote-label">
-      TOTE ID
-    </div>
+  <div
+    id="detailsCard"
+    class="card hidden"
+  >
+
+    <h2>📋 Tote Details</h2>
 
     <div
-      id="dTote"
-      class="tote-id">
-      ---
-    </div>
+      id="details"
+      class="details"
+    ></div>
+
+    <button
+      class="danger"
+      onclick="resetTote()"
+    >
+      🔄 COMPLETE / RESET TOTE
+    </button>
 
   </div>
 
-
-  <div class="grid">
-
-    <div class="info">
-      <small>Vendor</small>
-      <strong id="dVendor">---</strong>
-    </div>
-
-    <div class="info">
-      <small>Picker Name</small>
-      <strong id="dPicker">---</strong>
-    </div>
-
-    <div class="info">
-      <small>TL</small>
-      <strong id="dTL">---</strong>
-    </div>
-
-    <div class="info">
-      <small>Total Quantity</small>
-      <strong id="dTotal">---</strong>
-    </div>
-
-    <div class="info">
-      <small>Reject Quantity</small>
-      <strong id="dReject">---</strong>
-    </div>
-
-    <div class="info">
-      <small>Status</small>
-      <strong id="dStatus">---</strong>
-    </div>
-
-    <div class="info">
-      <small>VRP</small>
-      <strong id="dVRP">---</strong>
-    </div>
-
-    <div class="info">
-      <small>VRP Status</small>
-      <strong id="dVRPStatus">---</strong>
-    </div>
-
-  </div>
-
-
-  <div class="divider"></div>
-
-
-  <button
-    class="danger-btn"
-    onclick="resetTote()">
-
-    ♻️ COMPLETE / RESET TOTE
-
-  </button>
-
-</section>
-
-
-<div class="footer">
-  Tote Picking Management System • Google Sheets Connected
 </div>
 
-</main>
+<div class="footer">
+  Fast Tote Picking System • HHD / Mobile Optimized
+</div>
 
 
 <script>
 
-/* ==========================================
-   GOOGLE APPS SCRIPT URL
-========================================== */
-
 const API_URL =
 "https://script.google.com/macros/s/AKfycbxrvoIPkhcN4jPWotX6DCDmLsI1v01G96tYMfZ_l_cYdhDCUxuk5sVMivjHlZUoRrOU/exec";
 
-
-/* ==========================================
-   ELEMENTS
-========================================== */
 
 const toteIdEl =
 document.getElementById("toteId");
@@ -683,10 +341,10 @@ document.getElementById("toteId");
 const vendorEl =
 document.getElementById("vendor");
 
-const pickerNameEl =
+const pickerEl =
 document.getElementById("pickerName");
 
-const tlNoEl =
+const tlEl =
 document.getElementById("tlNo");
 
 const totalQtyEl =
@@ -698,8 +356,8 @@ document.getElementById("rejectQty");
 const vrpEl =
 document.getElementById("vrp");
 
-const pickingCard =
-document.getElementById("pickingCard");
+const formCard =
+document.getElementById("formCard");
 
 const vrpCard =
 document.getElementById("vrpCard");
@@ -707,267 +365,176 @@ document.getElementById("vrpCard");
 const detailsCard =
 document.getElementById("detailsCard");
 
+const detailsEl =
+document.getElementById("details");
+
 const statusBox =
 document.getElementById("statusBox");
 
-const displayTote =
-document.getElementById("displayTote");
+
+// Client-side fast cache
+const clientCache = new Map();
 
 
-/* ==========================================
-   STATUS
-========================================== */
+// =====================================================
+// STATUS
+// =====================================================
 
-function showStatus(message,type="info"){
+function showStatus(message, type = "normal") {
 
-  statusBox.className =
-    "status show " + type;
+  statusBox.style.display = "block";
 
-  statusBox.textContent =
-    message;
+  statusBox.textContent = message;
+
+  if (type === "error") {
+    statusBox.style.background = "#ffe4e4";
+    statusBox.style.color = "#b00020";
+  }
+  else if (type === "success") {
+    statusBox.style.background = "#e4f7ea";
+    statusBox.style.color = "#146b2e";
+  }
+  else {
+    statusBox.style.background = "#edf2f7";
+    statusBox.style.color = "#333";
+  }
 }
 
 
-/* ==========================================
-   API REQUEST
-========================================== */
+// =====================================================
+// API REQUEST
+// =====================================================
 
-async function apiRequest(payload){
+async function apiRequest(payload) {
 
-  const response =
-    await fetch(API_URL,{
-      method:"POST",
+  const controller =
+    new AbortController();
 
-      headers:{
-        "Content-Type":
-        "text/plain;charset=utf-8"
-      },
-
-      body:JSON.stringify(payload)
-    });
-
-
-  if(!response.ok){
-
-    throw new Error(
-      "HTTP " + response.status
-    );
-  }
-
-
-  const text =
-    await response.text();
-
-
-  let result;
-
-  try{
-
-    result =
-      JSON.parse(text);
-
-  }catch(error){
-
-    throw new Error(
-      "Invalid Google API response"
-    );
-  }
-
-
-  return result;
-}
-
-
-/* ==========================================
-   LOAD TOTE
-========================================== */
-
-async function loadTote(){
-
-  const toteId =
-    toteIdEl.value.trim();
-
-
-  if(!toteId){
-
-    showStatus(
-      "Please scan or enter Tote ID",
-      "error"
+  const timeout =
+    setTimeout(
+      () => controller.abort(),
+      12000
     );
 
-    toteIdEl.focus();
+  try {
 
-    return;
-  }
+    const response =
+      await fetch(API_URL, {
 
+        method: "POST",
 
-  showStatus(
-    "Loading Tote information...",
-    "info"
-  );
+        headers: {
+          "Content-Type":
+            "text/plain;charset=utf-8"
+        },
 
+        body: JSON.stringify(payload),
 
-  try{
+        signal: controller.signal,
 
-    const result =
-      await apiRequest({
-        action:"get",
-        toteId:toteId
+        cache: "no-store"
+
       });
 
+    clearTimeout(timeout);
 
-    if(result.success){
-
-      fillData(result.data);
-
-      showStatus(
-        "Tote loaded successfully",
-        "success"
+    if (!response.ok) {
+      throw new Error(
+        "Server error " +
+        response.status
       );
-
-      return;
     }
 
+    return await response.json();
 
-    /* New Tote */
+  } finally {
 
-    clearForm();
-
-    displayTote.textContent =
-      toteId;
-
-    pickingCard.classList.remove(
-      "hidden"
-    );
-
-    detailsCard.classList.add(
-      "hidden"
-    );
-
-    showStatus(
-      "New Tote — Picking Form ready",
-      "info"
-    );
-
-
-  }catch(error){
-
-    showStatus(
-      "Google connection error: " +
-      error.message,
-      "error"
-    );
+    clearTimeout(timeout);
   }
 }
 
 
-/* ==========================================
-   VIEW TOTE
-========================================== */
+// =====================================================
+// BUTTON LOCK
+// =====================================================
 
-async function viewTote(){
+function buttonBusy(
+  buttonId,
+  busy
+) {
 
-  const toteId =
-    toteIdEl.value.trim();
+  const button =
+    document.getElementById(buttonId);
 
+  if (!button) return;
 
-  if(!toteId){
+  button.disabled = busy;
 
-    showStatus(
-      "Please scan or enter Tote ID",
-      "error"
-    );
-
-    toteIdEl.focus();
-
-    return;
-  }
-
-
-  showStatus(
-    "Loading read-only Tote details...",
-    "info"
-  );
-
-
-  try{
-
-    const result =
-      await apiRequest({
-        action:"get",
-        toteId:toteId
-      });
-
-
-    if(!result.success){
-
-      detailsCard.classList.add(
-        "hidden"
-      );
-
-      pickingCard.classList.add(
-        "hidden"
-      );
-
-      vrpCard.classList.add(
-        "hidden"
-      );
-
-      showStatus(
-        "No current data found for this Tote",
-        "error"
-      );
-
-      return;
-    }
-
-
-    showDetails(result.data);
-
-    pickingCard.classList.add(
-      "hidden"
-    );
-
-    vrpCard.classList.add(
-      "hidden"
-    );
-
-    showStatus(
-      "Tote details loaded — Read Only",
-      "success"
-    );
-
-
-  }catch(error){
-
-    showStatus(
-      "Google connection error: " +
-      error.message,
-      "error"
-    );
-  }
 }
 
 
-/* ==========================================
-   FILL DATA
-========================================== */
+// =====================================================
+// COLLECT FORM
+// =====================================================
 
-function fillData(data){
+function collectData(status) {
+
+  return {
+
+    action: status === "Picking Complete"
+      ? "pickingComplete"
+      : "save",
+
+    toteId:
+      toteIdEl.value.trim(),
+
+    vendor:
+      vendorEl.value.trim(),
+
+    pickerName:
+      pickerEl.value.trim(),
+
+    tlNo:
+      tlEl.value.trim(),
+
+    totalQty:
+      totalQtyEl.value.trim(),
+
+    rejectQty:
+      rejectQtyEl.value.trim() || "0",
+
+    status: status,
+
+    vrp:
+      vrpEl.value.trim(),
+
+    vrpStatus:
+      "",
+
+    vrpTimestamp:
+      ""
+
+  };
+
+}
+
+
+// =====================================================
+// FILL FORM
+// =====================================================
+
+function fillData(data) {
 
   toteIdEl.value =
     data.toteId || "";
 
-  displayTote.textContent =
-    data.toteId || "---";
-
   vendorEl.value =
     data.vendor || "";
 
-  pickerNameEl.value =
+  pickerEl.value =
     data.pickerName || "";
 
-  tlNoEl.value =
+  tlEl.value =
     data.tlNo || "";
 
   totalQtyEl.value =
@@ -979,72 +546,419 @@ function fillData(data){
   vrpEl.value =
     data.vrp || "";
 
-
-  pickingCard.classList.remove(
-    "hidden"
-  );
-
-
-  if(
-    data.status === "Picking Complete" ||
-    data.status === "VRP Verified"
-  ){
-
-    vrpCard.classList.remove(
-      "hidden"
-    );
-
-  }else{
-
-    vrpCard.classList.add(
-      "hidden"
-    );
-  }
-
-
-  showDetails(data);
 }
 
 
-/* ==========================================
-   CLEAR FORM
-========================================== */
+// =====================================================
+// SHOW FORM
+// =====================================================
 
-function clearForm(){
+function showForm() {
 
-  vendorEl.value = "";
+  formCard.classList.remove(
+    "hidden"
+  );
 
-  pickerNameEl.value = "";
+}
 
-  tlNoEl.value = "";
 
-  totalQtyEl.value = "";
+// =====================================================
+// HIDE FORM
+// =====================================================
 
-  rejectQtyEl.value = "0";
+function hideForm() {
 
-  vrpEl.value = "";
+  formCard.classList.add(
+    "hidden"
+  );
+
+}
+
+
+// =====================================================
+// SHOW VRP
+// =====================================================
+
+function showVRP() {
+
+  vrpCard.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+// =====================================================
+// HIDE VRP
+// =====================================================
+
+function hideVRP() {
 
   vrpCard.classList.add(
     "hidden"
   );
 
-  detailsCard.classList.add(
+}
+
+
+// =====================================================
+// SHOW DETAILS
+// =====================================================
+
+function showDetails(data) {
+
+  detailsCard.classList.remove(
     "hidden"
   );
+
+  detailsEl.innerHTML = `
+
+    <div>
+      <b>Tote ID:</b>
+      <span class="value">
+        ${escapeHTML(data.toteId || "---")}
+      </span>
+    </div>
+
+    <div>
+      <b>Vendor:</b>
+      <span class="value">
+        ${escapeHTML(data.vendor || "---")}
+      </span>
+    </div>
+
+    <div>
+      <b>Picker:</b>
+      <span class="value">
+        ${escapeHTML(data.pickerName || "---")}
+      </span>
+    </div>
+
+    <div>
+      <b>TL:</b>
+      <span class="value">
+        ${escapeHTML(data.tlNo || "---")}
+      </span>
+    </div>
+
+    <div>
+      <b>Total Qty:</b>
+      <span class="value">
+        ${escapeHTML(data.totalQty || "---")}
+      </span>
+    </div>
+
+    <div>
+      <b>Reject Qty:</b>
+      <span class="value">
+        ${escapeHTML(data.rejectQty || "0")}
+      </span>
+    </div>
+
+    <div>
+      <b>Status:</b>
+      <span class="value">
+        ${escapeHTML(data.status || "---")}
+      </span>
+    </div>
+
+    <div>
+      <b>VRP:</b>
+      <span class="value">
+        ${escapeHTML(data.vrp || "---")}
+      </span>
+    </div>
+
+    <div>
+      <b>VRP Status:</b>
+      <span class="value">
+        ${escapeHTML(data.vrpStatus || "---")}
+      </span>
+    </div>
+
+  `;
+
 }
 
 
-/* ==========================================
-   SAVE DATA
-========================================== */
+// =====================================================
+// LOAD TOTE
+// =====================================================
 
-async function saveData(){
+async function loadTote() {
 
   const toteId =
     toteIdEl.value.trim();
 
+  if (!toteId) {
 
-  if(!toteId){
+    showStatus(
+      "Please enter Tote ID",
+      "error"
+    );
+
+    toteIdEl.focus();
+
+    return;
+  }
+
+
+  // Instant client cache
+  if (clientCache.has(toteId)) {
+
+    const cached =
+      clientCache.get(toteId);
+
+    fillData(cached);
+
+    showForm();
+
+    showStatus(
+      "⚡ Fast loaded",
+      "success"
+    );
+
+    if (
+      cached.status ===
+      "Picking Complete"
+    ) {
+      showVRP();
+    }
+
+  }
+
+
+  buttonBusy(
+    "loadBtn",
+    true
+  );
+
+
+  if (!clientCache.has(toteId)) {
+
+    showStatus(
+      "Loading...",
+      "normal"
+    );
+
+  }
+
+
+  try {
+
+    const result =
+      await apiRequest({
+
+        action: "get",
+
+        toteId: toteId
+
+      });
+
+
+    if (result.success) {
+
+      const data =
+        result.data;
+
+      clientCache.set(
+        toteId,
+        data
+      );
+
+      fillData(data);
+
+      showForm();
+
+      showStatus(
+        "⚡ Tote loaded",
+        "success"
+      );
+
+
+      if (
+        data.status ===
+        "Picking Complete"
+      ) {
+
+        showVRP();
+
+      }
+      else {
+
+        hideVRP();
+
+      }
+
+      showDetails(data);
+
+    }
+    else {
+
+      // New tote
+      clearForm(false);
+
+      toteIdEl.value =
+        toteId;
+
+      showForm();
+
+      hideVRP();
+
+      detailsCard.classList.add(
+        "hidden"
+      );
+
+      showStatus(
+        "🆕 New Tote — Ready for Picking",
+        "success"
+      );
+
+    }
+
+  }
+  catch (error) {
+
+    showStatus(
+      "❌ Connection problem. Please try again.",
+      "error"
+    );
+
+  }
+  finally {
+
+    buttonBusy(
+      "loadBtn",
+      false
+    );
+
+  }
+
+}
+
+
+// =====================================================
+// VIEW TOTE
+// =====================================================
+
+async function viewTote() {
+
+  const toteId =
+    toteIdEl.value.trim();
+
+  if (!toteId) {
+
+    showStatus(
+      "Please enter Tote ID",
+      "error"
+    );
+
+    return;
+  }
+
+
+  // Instant client display
+  if (clientCache.has(toteId)) {
+
+    showDetails(
+      clientCache.get(toteId)
+    );
+
+    showStatus(
+      "⚡ Instant view",
+      "success"
+    );
+
+  }
+  else {
+
+    showStatus(
+      "Loading...",
+      "normal"
+    );
+
+  }
+
+
+  buttonBusy(
+    "viewBtn",
+    true
+  );
+
+
+  try {
+
+    const result =
+      await apiRequest({
+
+        action: "get",
+
+        toteId: toteId
+
+      });
+
+
+    if (result.success) {
+
+      clientCache.set(
+        toteId,
+        result.data
+      );
+
+      showDetails(
+        result.data
+      );
+
+      showStatus(
+        "✅ Latest data loaded",
+        "success"
+      );
+
+    }
+    else {
+
+      showStatus(
+        "No current data found",
+        "error"
+      );
+
+      detailsCard.classList.add(
+        "hidden"
+      );
+
+    }
+
+  }
+  catch (error) {
+
+    showStatus(
+      "❌ Unable to load data",
+      "error"
+    );
+
+  }
+  finally {
+
+    buttonBusy(
+      "viewBtn",
+      false
+    );
+
+  }
+
+}
+
+
+// =====================================================
+// SAVE
+// =====================================================
+
+async function saveData() {
+
+  const toteId =
+    toteIdEl.value.trim();
+
+  if (!toteId) {
 
     showStatus(
       "Tote ID required",
@@ -1055,20 +969,101 @@ async function saveData(){
   }
 
 
-  if(!pickerNameEl.value.trim()){
+  const data =
+    collectData("Saved");
+
+
+  buttonBusy(
+    "saveBtn",
+    true
+  );
+
+
+  showStatus(
+    "Saving...",
+    "normal"
+  );
+
+
+  try {
+
+    const result =
+      await apiRequest(data);
+
+
+    if (!result.success) {
+
+      throw new Error(
+        result.message
+      );
+
+    }
+
+
+    const saved =
+      result.data;
+
+
+    // Instant UI update
+    clientCache.set(
+      toteId,
+      saved
+    );
+
+    fillData(saved);
+
+    showDetails(saved);
+
 
     showStatus(
-      "Picker Name required",
+      "✅ Saved successfully",
+      "success"
+    );
+
+  }
+  catch (error) {
+
+    showStatus(
+      "❌ Save failed: " +
+      error.message,
       "error"
     );
 
-    pickerNameEl.focus();
+  }
+  finally {
+
+    buttonBusy(
+      "saveBtn",
+      false
+    );
+
+  }
+
+}
+
+
+// =====================================================
+// PICKING COMPLETE
+// ONE API REQUEST
+// =====================================================
+
+async function completePicking() {
+
+  const toteId =
+    toteIdEl.value.trim();
+
+  if (!toteId) {
+
+    showStatus(
+      "Tote ID required",
+      "error"
+    );
 
     return;
   }
 
 
-  if(!totalQtyEl.value){
+  if (!totalQtyEl.value.trim()) {
 
     showStatus(
       "Total Quantity required",
@@ -1081,211 +1076,95 @@ async function saveData(){
   }
 
 
-  showStatus(
-    "Saving picking data...",
-    "info"
+  const data =
+    collectData(
+      "Picking Complete"
+    );
+
+
+  buttonBusy(
+    "completeBtn",
+    true
   );
 
 
-  try{
+  showStatus(
+    "Completing picking...",
+    "normal"
+  );
+
+
+  try {
 
     const result =
-      await apiRequest({
-
-        action:"save",
-
-        toteId:toteId,
-
-        vendor:
-          vendorEl.value.trim(),
-
-        pickerName:
-          pickerNameEl.value.trim(),
-
-        tlNo:
-          tlNoEl.value.trim(),
-
-        totalQty:
-          totalQtyEl.value.trim(),
-
-        rejectQty:
-          rejectQtyEl.value.trim() || "0",
-
-        status:"Saved"
-
-      });
+      await apiRequest(data);
 
 
-    if(!result.success){
+    if (!result.success) {
 
       throw new Error(
         result.message
       );
+
     }
 
 
+    const completed =
+      result.data;
+
+
+    // Instant local update
+    clientCache.set(
+      toteId,
+      completed
+    );
+
+    fillData(completed);
+
+    showVRP();
+
+    showDetails(completed);
+
+
     showStatus(
-      "Picking data saved successfully",
+      "✅ Picking Complete",
       "success"
     );
 
 
-    await loadTote();
+    // Focus VRP
+    setTimeout(
+      () => vrpEl.focus(),
+      100
+    );
 
-
-  }catch(error){
+  }
+  catch (error) {
 
     showStatus(
-      "Save failed: " +
+      "❌ Complete failed: " +
       error.message,
       "error"
     );
+
   }
+  finally {
+
+    buttonBusy(
+      "completeBtn",
+      false
+    );
+
+  }
+
 }
 
 
-/* ==========================================
-   PICKING COMPLETE
-========================================== */
+// =====================================================
+// VRP VERIFY
+// =====================================================
 
-async function completePicking(){
-
-  const toteId =
-    toteIdEl.value.trim();
-
-
-  if(!toteId){
-
-    showStatus(
-      "Tote ID required",
-      "error"
-    );
-
-    return;
-  }
-
-
-  if(!pickerNameEl.value.trim()){
-
-    showStatus(
-      "Picker Name required",
-      "error"
-    );
-
-    pickerNameEl.focus();
-
-    return;
-  }
-
-
-  if(!totalQtyEl.value){
-
-    showStatus(
-      "Total Quantity required",
-      "error"
-    );
-
-    totalQtyEl.focus();
-
-    return;
-  }
-
-
-  showStatus(
-    "Completing Picking...",
-    "info"
-  );
-
-
-  try{
-
-    /* Save latest data first */
-
-    const saveResult =
-      await apiRequest({
-
-        action:"save",
-
-        toteId:toteId,
-
-        vendor:
-          vendorEl.value.trim(),
-
-        pickerName:
-          pickerNameEl.value.trim(),
-
-        tlNo:
-          tlNoEl.value.trim(),
-
-        totalQty:
-          totalQtyEl.value.trim(),
-
-        rejectQty:
-          rejectQtyEl.value.trim() || "0",
-
-        status:"Saved"
-
-      });
-
-
-    if(!saveResult.success){
-
-      throw new Error(
-        saveResult.message
-      );
-    }
-
-
-    /* Complete Picking */
-
-    const result =
-      await apiRequest({
-
-        action:"pickingComplete",
-
-        toteId:toteId
-
-      });
-
-
-    if(!result.success){
-
-      throw new Error(
-        result.message
-      );
-    }
-
-
-    showStatus(
-      "Picking completed successfully",
-      "success"
-    );
-
-
-    vrpCard.classList.remove(
-      "hidden"
-    );
-
-
-    await loadTote();
-
-
-  }catch(error){
-
-    showStatus(
-      "Picking Complete failed: " +
-      error.message,
-      "error"
-    );
-  }
-}
-
-
-/* ==========================================
-   VRP VERIFY
-========================================== */
-
-async function verifyVRP(){
+async function verifyVRP() {
 
   const toteId =
     toteIdEl.value.trim();
@@ -1294,7 +1173,7 @@ async function verifyVRP(){
     vrpEl.value.trim();
 
 
-  if(!toteId){
+  if (!toteId) {
 
     showStatus(
       "Tote ID required",
@@ -1305,7 +1184,7 @@ async function verifyVRP(){
   }
 
 
-  if(!vrp){
+  if (!vrp) {
 
     showStatus(
       "VRP required",
@@ -1318,131 +1197,91 @@ async function verifyVRP(){
   }
 
 
-  showStatus(
-    "Verifying VRP...",
-    "info"
+  buttonBusy(
+    "vrpBtn",
+    true
   );
 
 
-  try{
+  showStatus(
+    "Verifying VRP...",
+    "normal"
+  );
+
+
+  try {
 
     const result =
       await apiRequest({
 
-        action:"vrpVerify",
+        action: "vrpVerify",
 
-        toteId:toteId,
+        toteId: toteId,
 
-        vrp:vrp
+        vrp: vrp
 
       });
 
 
-    if(!result.success){
+    if (!result.success) {
 
       throw new Error(
         result.message
       );
+
     }
 
 
+    const verified =
+      result.data;
+
+
+    clientCache.set(
+      toteId,
+      verified
+    );
+
+    fillData(verified);
+
+    showDetails(verified);
+
+
     showStatus(
-      "VRP verified successfully",
+      "✅ VRP Verified",
       "success"
     );
 
-
-    await loadTote();
-
-
-  }catch(error){
+  }
+  catch (error) {
 
     showStatus(
-      "VRP verification failed: " +
-      error.message,
+      "❌ VRP verification failed",
       "error"
     );
+
   }
+  finally {
+
+    buttonBusy(
+      "vrpBtn",
+      false
+    );
+
+  }
+
 }
 
 
-/* ==========================================
-   SHOW DETAILS
-========================================== */
+// =====================================================
+// RESET
+// =====================================================
 
-function showDetails(data){
-
-  document.getElementById(
-    "dTote"
-  ).textContent =
-    data.toteId || "---";
-
-
-  document.getElementById(
-    "dVendor"
-  ).textContent =
-    data.vendor || "---";
-
-
-  document.getElementById(
-    "dPicker"
-  ).textContent =
-    data.pickerName || "---";
-
-
-  document.getElementById(
-    "dTL"
-  ).textContent =
-    data.tlNo || "---";
-
-
-  document.getElementById(
-    "dTotal"
-  ).textContent =
-    data.totalQty || "---";
-
-
-  document.getElementById(
-    "dReject"
-  ).textContent =
-    data.rejectQty || "0";
-
-
-  document.getElementById(
-    "dStatus"
-  ).textContent =
-    data.status || "---";
-
-
-  document.getElementById(
-    "dVRP"
-  ).textContent =
-    data.vrp || "---";
-
-
-  document.getElementById(
-    "dVRPStatus"
-  ).textContent =
-    data.vrpStatus || "---";
-
-
-  detailsCard.classList.remove(
-    "hidden"
-  );
-}
-
-
-/* ==========================================
-   RESET / COMPLETE TOTE
-========================================== */
-
-async function resetTote(){
+async function resetTote() {
 
   const toteId =
     toteIdEl.value.trim();
 
-
-  if(!toteId){
+  if (!toteId) {
 
     showStatus(
       "Tote ID required",
@@ -1453,113 +1292,159 @@ async function resetTote(){
   }
 
 
-  const confirmReset =
-    confirm(
+  if (
+    !confirm(
       "Are you sure you want to Complete / Reset this Tote?"
-    );
-
-
-  if(!confirmReset){
-
+    )
+  ) {
     return;
   }
 
 
   showStatus(
-    "Completing / Resetting Tote...",
-    "info"
+    "Resetting...",
+    "normal"
   );
 
 
-  try{
+  try {
 
     const result =
       await apiRequest({
 
-        action:"reset",
+        action: "reset",
 
-        toteId:toteId
+        toteId: toteId
 
       });
 
 
-    if(!result.success){
+    if (!result.success) {
 
       throw new Error(
         result.message
       );
+
     }
 
 
+    // Remove local cache
+    clientCache.delete(
+      toteId
+    );
+
+
+    clearForm(true);
+
+
     showStatus(
-      "Tote completed. History saved successfully.",
+      "✅ Tote completed and reset",
       "success"
     );
 
 
-    /* Clear screen */
-
-    toteIdEl.value = "";
-
-    clearForm();
-
-    pickingCard.classList.add(
-      "hidden"
-    );
-
-    vrpCard.classList.add(
-      "hidden"
-    );
-
-    detailsCard.classList.add(
-      "hidden"
-    );
-
-
-    toteIdEl.focus();
-
-
-  }catch(error){
+  }
+  catch (error) {
 
     showStatus(
-      "Reset failed: " +
+      "❌ Reset failed: " +
       error.message,
       "error"
     );
+
   }
+
 }
 
 
-/* ==========================================
-   ENTER KEY
-========================================== */
+// =====================================================
+// CLEAR FORM
+// =====================================================
+
+function clearForm(clearTote = true) {
+
+  if (clearTote) {
+    toteIdEl.value = "";
+  }
+
+  vendorEl.value = "";
+  pickerEl.value = "";
+  tlEl.value = "";
+  totalQtyEl.value = "";
+  rejectQtyEl.value = "0";
+  vrpEl.value = "";
+
+  hideVRP();
+
+  detailsCard.classList.add(
+    "hidden"
+  );
+
+}
+
+
+// =====================================================
+// ESCAPE HTML
+// =====================================================
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+// =====================================================
+// ENTER KEY
+// =====================================================
 
 toteIdEl.addEventListener(
   "keydown",
-  function(event){
+  function(event) {
 
-    if(event.key === "Enter"){
+    if (event.key === "Enter") {
 
       event.preventDefault();
 
       loadTote();
+
     }
-  }
-);
-
-
-/* ==========================================
-   PAGE LOAD
-========================================== */
-
-window.addEventListener(
-  "load",
-  function(){
-
-    toteIdEl.focus();
 
   }
 );
+
+
+// =====================================================
+// AUTO LOAD FROM QR URL
+// Example:
+// ?tote=TOTE-001
+// =====================================================
+
+(function autoLoadQR() {
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const tote =
+    params.get("tote");
+
+  if (tote) {
+
+    toteIdEl.value =
+      tote.trim();
+
+    loadTote();
+
+  }
+
+})();
 
 </script>
 
