@@ -1,178 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
+  <title>Tote Picking Slip</title>
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
->
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-<title>Tote Picking Management</title>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
 
-<style>
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 15px;
+    }
 
-* {
-  box-sizing: border-box;
-}
+    .header {
+      background: #111827;
+      color: white;
+      padding: 18px;
+      border-radius: 14px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f3f6fa;
-  color: #172033;
-}
+    .header h1 {
+      margin: 0;
+      font-size: 23px;
+    }
 
-.header {
-  background: #172033;
-  color: white;
-  padding: 16px;
-  text-align: center;
-  font-size: 21px;
-  font-weight: bold;
-}
+    .header p {
+      margin: 6px 0 0;
+      font-size: 13px;
+      opacity: .8;
+    }
 
-.container {
-  max-width: 650px;
-  margin: auto;
-  padding: 12px;
-}
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 15px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.08);
+    }
 
-.card {
-  background: white;
-  border-radius: 14px;
-  padding: 16px;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-}
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
 
-.card h2 {
-  margin-top: 0;
-  font-size: 18px;
-}
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d1d5db;
+      border-radius: 9px;
+      font-size: 16px;
+      outline: none;
+    }
 
-label {
-  display: block;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  font-weight: bold;
-  font-size: 14px;
-}
+    input:focus {
+      border-color: #2563eb;
+    }
 
-input {
-  width: 100%;
-  padding: 13px;
-  border: 1px solid #ccd3dd;
-  border-radius: 9px;
-  font-size: 16px;
-  outline: none;
-}
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px;
+      cursor: pointer;
+    }
 
-input:focus {
-  border-color: #172033;
-}
+    .primary {
+      background: #2563eb;
+      color: white;
+    }
 
-button {
-  width: 100%;
-  padding: 13px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 9px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
+    .success {
+      background: #16a34a;
+      color: white;
+    }
 
-button:disabled {
-  opacity: 0.55;
-}
+    .warning {
+      background: #f59e0b;
+      color: white;
+    }
 
-.primary {
-  background: #172033;
-  color: white;
-}
+    .danger {
+      background: #dc2626;
+      color: white;
+    }
 
-.success {
-  background: #16803c;
-  color: white;
-}
+    .secondary {
+      background: #374151;
+      color: white;
+    }
 
-.warning {
-  background: #d98b00;
-  color: white;
-}
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
 
-.danger {
-  background: #c62828;
-  color: white;
-}
+    .status {
+      padding: 12px;
+      border-radius: 9px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      display: none;
+    }
 
-.secondary {
-  background: #e8edf3;
-  color: #172033;
-}
+    .status.successMsg {
+      display: block;
+      background: #dcfce7;
+      color: #166534;
+    }
 
-.status {
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 10px;
-  display: none;
-  font-size: 14px;
-}
+    .status.errorMsg {
+      display: block;
+      background: #fee2e2;
+      color: #991b1b;
+    }
 
-.details {
-  background: #f7f9fc;
-  border-radius: 10px;
-  padding: 12px;
-  line-height: 1.8;
-}
+    .status.loadingMsg {
+      display: block;
+      background: #dbeafe;
+      color: #1e40af;
+    }
 
-.value {
-  font-weight: bold;
-}
+    .details {
+      display: none;
+    }
 
-.footer {
-  text-align: center;
-  padding: 15px;
-  color: #777;
-  font-size: 12px;
-}
+    .details.show {
+      display: block;
+    }
 
-.hidden {
-  display: none !important;
-}
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
 
-.loading {
-  text-align: center;
-  padding: 12px;
-  color: #555;
-}
+    .detail-row:last-child {
+      border-bottom: none;
+    }
 
-</style>
+    .detail-label {
+      font-weight: bold;
+      color: #555;
+    }
 
+    .detail-value {
+      text-align: right;
+      word-break: break-word;
+    }
+
+    .actions {
+      display: none;
+    }
+
+    .actions.show {
+      display: block;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      background: #e5e7eb;
+    }
+
+    .footer {
+      text-align: center;
+      color: #777;
+      font-size: 12px;
+      padding: 15px 0;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="header">
-  📦 Tote Picking Management
-</div>
-
 <div class="container">
 
-  <!-- TOTE CONTROL -->
+  <div class="header">
+    <h1>📦 TOTE PICKING SLIP</h1>
+    <p>Permanent Tote QR Management System</p>
+  </div>
 
+  <div id="statusBox" class="status"></div>
+
+  <!-- TOTE SEARCH -->
   <div class="card">
-
-    <h2>🔎 Tote Control</h2>
-
-    <label>Tote ID</label>
+    <label for="toteId">Tote ID</label>
 
     <input
-      id="toteId"
       type="text"
+      id="toteId"
       placeholder="Scan / Enter Tote ID"
       autocomplete="off"
     >
@@ -180,1273 +221,990 @@ button:disabled {
     <button
       id="loadBtn"
       class="primary"
-      onclick="loadTote()"
-    >
-      START / LOAD TOTE
+      onclick="loadTote()">
+      🔍 Load Tote
     </button>
-
-    <button
-      id="viewBtn"
-      class="secondary"
-      onclick="viewTote()"
-    >
-      👁 VIEW TOTE
-    </button>
-
-    <div
-      id="statusBox"
-      class="status"
-    ></div>
-
   </div>
 
-
   <!-- PICKING FORM -->
+  <div class="card">
 
-  <div
-    id="formCard"
-    class="card hidden"
-  >
-
-    <h2>📝 Picking Form</h2>
+    <h3>📝 Picking Details</h3>
 
     <label>Vendor</label>
-
     <input
-      id="vendor"
       type="text"
-      autocomplete="off"
+      id="vendor"
+      placeholder="Enter Vendor"
     >
 
     <label>Picker Name</label>
-
     <input
-      id="pickerName"
       type="text"
-      autocomplete="off"
+      id="pickerName"
+      placeholder="Enter Picker Name"
     >
 
     <label>TL</label>
-
     <input
-      id="tlNo"
       type="text"
-      autocomplete="off"
+      id="tlNo"
+      placeholder="Enter TL"
     >
 
     <label>Total Quantity</label>
-
     <input
-      id="totalQty"
       type="number"
-      inputmode="numeric"
+      id="totalQty"
+      placeholder="Enter Total Qty"
+      min="0"
     >
 
     <label>Reject Quantity</label>
-
     <input
-      id="rejectQty"
       type="number"
-      inputmode="numeric"
+      id="rejectQty"
+      placeholder="Enter Reject Qty"
+      min="0"
       value="0"
     >
 
     <button
       id="saveBtn"
       class="primary"
-      onclick="saveData()"
-    >
-      💾 SAVE PICKING
-    </button>
-
-    <button
-      id="completeBtn"
-      class="success"
-      onclick="completePicking()"
-    >
-      ✅ PICKING COMPLETE
+      onclick="saveData()">
+      💾 Save Picking Data
     </button>
 
   </div>
 
+  <!-- CURRENT DETAILS -->
+  <div id="detailsCard" class="card details">
 
-  <!-- VRP -->
+    <h3>📋 Picking Details View</h3>
 
-  <div
-    id="vrpCard"
-    class="card hidden"
-  >
+    <div class="detail-row">
+      <span class="detail-label">Tote ID</span>
+      <span id="dToteId" class="detail-value">-</span>
+    </div>
 
-    <h2>🔐 VRP Verification</h2>
+    <div class="detail-row">
+      <span class="detail-label">Vendor</span>
+      <span id="dVendor" class="detail-value">-</span>
+    </div>
 
-    <label>VRP</label>
+    <div class="detail-row">
+      <span class="detail-label">Picker</span>
+      <span id="dPicker" class="detail-value">-</span>
+    </div>
+
+    <div class="detail-row">
+      <span class="detail-label">TL</span>
+      <span id="dTL" class="detail-value">-</span>
+    </div>
+
+    <div class="detail-row">
+      <span class="detail-label">Total Qty</span>
+      <span id="dQty" class="detail-value">-</span>
+    </div>
+
+    <div class="detail-row">
+      <span class="detail-label">Reject Qty</span>
+      <span id="dReject" class="detail-value">-</span>
+    </div>
+
+    <div class="detail-row">
+      <span class="detail-label">Status</span>
+      <span id="dStatus" class="detail-value">
+        <span class="badge">-</span>
+      </span>
+    </div>
+
+    <div class="detail-row">
+      <span class="detail-label">VRP</span>
+      <span id="dVRP" class="detail-value">-</span>
+    </div>
+
+    <div class="detail-row">
+      <span class="detail-label">VRP Status</span>
+      <span id="dVRPStatus" class="detail-value">-</span>
+    </div>
+
+  </div>
+
+  <!-- ACTIONS -->
+  <div id="actionsCard" class="card actions">
+
+    <button
+      id="completeBtn"
+      class="success"
+      onclick="completePicking()">
+      ✅ Picking Complete
+    </button>
+
+    <label>VRP Entry</label>
 
     <input
-      id="vrp"
       type="text"
+      id="vrp"
       placeholder="Enter VRP"
       autocomplete="off"
     >
 
     <button
-      id="vrpBtn"
+      id="verifyBtn"
       class="warning"
-      onclick="verifyVRP()"
-    >
-      ✔ VERIFY VRP
+      onclick="verifyVRP()">
+      🔐 Verify VRP
     </button>
-
-  </div>
-
-
-  <!-- DETAILS -->
-
-  <div
-    id="detailsCard"
-    class="card hidden"
-  >
-
-    <h2>📋 Tote Details</h2>
-
-    <div
-      id="details"
-      class="details"
-    ></div>
 
     <button
+      id="viewBtn"
+      class="secondary"
+      onclick="viewTote()">
+      👁️ View Picking Details
+    </button>
+
+    <button
+      id="resetBtn"
       class="danger"
-      onclick="resetTote()"
-    >
-      🔄 COMPLETE / RESET TOTE
+      onclick="resetTote()">
+      ♻️ Complete / Reset Tote
     </button>
 
   </div>
 
-</div>
+  <div class="footer">
+    Permanent Tote QR • Mobile / HHD Friendly
+  </div>
 
-<div class="footer">
-  Fast Tote Picking System • HHD / Mobile Optimized
 </div>
-
 
 <script>
 
-const API_URL =
-"https://script.google.com/a/macros/flipkart.com/s/AKfycbzYtjj7uFzinKq8WRSuzcsty2oUTUDKplRIhOld5C-ikiOgb29oi-hkhgwlVI9pZDtK/exec";
+  /* =====================================================
+     GOOGLE APPS SCRIPT API
+     ===================================================== */
+
+  const API_URL =
+    "https://script.google.com/a/macros/flipkart.com/s/AKfycbzYtjj7uFzinKq8WRSuzcsty2oUTUDKplRIhOld5C-2ikiOgb29oi-hkhgwlVI9pZDtK/exec";
 
 
-const toteIdEl =
-document.getElementById("toteId");
+  /* =====================================================
+     CLIENT CACHE
+     ===================================================== */
 
-const vendorEl =
-document.getElementById("vendor");
-
-const pickerEl =
-document.getElementById("pickerName");
-
-const tlEl =
-document.getElementById("tlNo");
-
-const totalQtyEl =
-document.getElementById("totalQty");
-
-const rejectQtyEl =
-document.getElementById("rejectQty");
-
-const vrpEl =
-document.getElementById("vrp");
-
-const formCard =
-document.getElementById("formCard");
-
-const vrpCard =
-document.getElementById("vrpCard");
-
-const detailsCard =
-document.getElementById("detailsCard");
-
-const detailsEl =
-document.getElementById("details");
-
-const statusBox =
-document.getElementById("statusBox");
+  const clientCache = new Map();
 
 
-// Client-side fast cache
-const clientCache = new Map();
+  /* =====================================================
+     ELEMENTS
+     ===================================================== */
+
+  const toteInput = document.getElementById("toteId");
+
+  const vendorInput = document.getElementById("vendor");
+  const pickerInput = document.getElementById("pickerName");
+  const tlInput = document.getElementById("tlNo");
+  const qtyInput = document.getElementById("totalQty");
+  const rejectInput = document.getElementById("rejectQty");
+  const vrpInput = document.getElementById("vrp");
+
+  const detailsCard =
+    document.getElementById("detailsCard");
+
+  const actionsCard =
+    document.getElementById("actionsCard");
+
+  const statusBox =
+    document.getElementById("statusBox");
 
 
-// =====================================================
-// STATUS
-// =====================================================
+  /* =====================================================
+     STATUS
+     ===================================================== */
 
-function showStatus(message, type = "normal") {
+  function showStatus(message, type = "loadingMsg") {
 
-  statusBox.style.display = "block";
+    statusBox.textContent = message;
 
-  statusBox.textContent = message;
-
-  if (type === "error") {
-    statusBox.style.background = "#ffe4e4";
-    statusBox.style.color = "#b00020";
+    statusBox.className =
+      "status " + type;
   }
-  else if (type === "success") {
-    statusBox.style.background = "#e4f7ea";
-    statusBox.style.color = "#146b2e";
+
+
+  function hideStatus() {
+
+    statusBox.textContent = "";
+
+    statusBox.className = "status";
   }
-  else {
-    statusBox.style.background = "#edf2f7";
-    statusBox.style.color = "#333";
+
+
+  /* =====================================================
+     BUTTON LOCK
+     ===================================================== */
+
+  function lockButton(button, text) {
+
+    button.disabled = true;
+    button.dataset.oldText = button.textContent;
+    button.textContent = text;
   }
-}
 
 
-// =====================================================
-// API REQUEST
-// =====================================================
+  function unlockButton(button) {
 
-async function apiRequest(payload) {
+    button.disabled = false;
 
-  const controller =
-    new AbortController();
+    if (button.dataset.oldText) {
+      button.textContent = button.dataset.oldText;
+    }
+  }
 
-  const timeout =
-    setTimeout(
-      () => controller.abort(),
-      12000
-    );
 
-  try {
+  /* =====================================================
+     API REQUEST
+     ===================================================== */
 
-    const response =
-      await fetch(API_URL, {
+  async function apiRequest(payload) {
 
-        method: "POST",
+    const controller =
+      new AbortController();
 
-        headers: {
-          "Content-Type":
-            "text/plain;charset=utf-8"
-        },
+    const timeout =
+      setTimeout(() => controller.abort(), 12000);
 
-        body: JSON.stringify(payload),
+    try {
 
-        signal: controller.signal,
+      const response =
+        await fetch(API_URL, {
 
-        cache: "no-store"
+          method: "POST",
 
-      });
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
 
-    clearTimeout(timeout);
+          body: JSON.stringify(payload),
 
-    if (!response.ok) {
-      throw new Error(
-        "Server error " +
-        response.status
+          cache: "no-store",
+
+          signal: controller.signal
+        });
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          "Server error: " + response.status
+        );
+      }
+
+
+      const result =
+        await response.json();
+
+      return result;
+
+    } catch (error) {
+
+      if (error.name === "AbortError") {
+
+        throw new Error(
+          "Server response timeout."
+        );
+      }
+
+      throw error;
+
+    } finally {
+
+      clearTimeout(timeout);
+    }
+  }
+
+
+  /* =====================================================
+     LOAD TOTE
+     ===================================================== */
+
+  async function loadTote() {
+
+    const toteId =
+      toteInput.value.trim();
+
+    if (!toteId) {
+
+      showStatus(
+        "Please enter or scan Tote ID.",
+        "errorMsg"
       );
+
+      toteInput.focus();
+
+      return;
     }
 
-    return await response.json();
 
-  } finally {
+    const button =
+      document.getElementById("loadBtn");
 
-    clearTimeout(timeout);
-  }
-}
-
-
-// =====================================================
-// BUTTON LOCK
-// =====================================================
-
-function buttonBusy(
-  buttonId,
-  busy
-) {
-
-  const button =
-    document.getElementById(buttonId);
-
-  if (!button) return;
-
-  button.disabled = busy;
-
-}
-
-
-// =====================================================
-// COLLECT FORM
-// =====================================================
-
-function collectData(status) {
-
-  return {
-
-    action: status === "Picking Complete"
-      ? "pickingComplete"
-      : "save",
-
-    toteId:
-      toteIdEl.value.trim(),
-
-    vendor:
-      vendorEl.value.trim(),
-
-    pickerName:
-      pickerEl.value.trim(),
-
-    tlNo:
-      tlEl.value.trim(),
-
-    totalQty:
-      totalQtyEl.value.trim(),
-
-    rejectQty:
-      rejectQtyEl.value.trim() || "0",
-
-    status: status,
-
-    vrp:
-      vrpEl.value.trim(),
-
-    vrpStatus:
-      "",
-
-    vrpTimestamp:
-      ""
-
-  };
-
-}
-
-
-// =====================================================
-// FILL FORM
-// =====================================================
-
-function fillData(data) {
-
-  toteIdEl.value =
-    data.toteId || "";
-
-  vendorEl.value =
-    data.vendor || "";
-
-  pickerEl.value =
-    data.pickerName || "";
-
-  tlEl.value =
-    data.tlNo || "";
-
-  totalQtyEl.value =
-    data.totalQty || "";
-
-  rejectQtyEl.value =
-    data.rejectQty || "0";
-
-  vrpEl.value =
-    data.vrp || "";
-
-}
-
-
-// =====================================================
-// SHOW FORM
-// =====================================================
-
-function showForm() {
-
-  formCard.classList.remove(
-    "hidden"
-  );
-
-}
-
-
-// =====================================================
-// HIDE FORM
-// =====================================================
-
-function hideForm() {
-
-  formCard.classList.add(
-    "hidden"
-  );
-
-}
-
-
-// =====================================================
-// SHOW VRP
-// =====================================================
-
-function showVRP() {
-
-  vrpCard.classList.remove(
-    "hidden"
-  );
-
-}
-
-
-// =====================================================
-// HIDE VRP
-// =====================================================
-
-function hideVRP() {
-
-  vrpCard.classList.add(
-    "hidden"
-  );
-
-}
-
-
-// =====================================================
-// SHOW DETAILS
-// =====================================================
-
-function showDetails(data) {
-
-  detailsCard.classList.remove(
-    "hidden"
-  );
-
-  detailsEl.innerHTML = `
-
-    <div>
-      <b>Tote ID:</b>
-      <span class="value">
-        ${escapeHTML(data.toteId || "---")}
-      </span>
-    </div>
-
-    <div>
-      <b>Vendor:</b>
-      <span class="value">
-        ${escapeHTML(data.vendor || "---")}
-      </span>
-    </div>
-
-    <div>
-      <b>Picker:</b>
-      <span class="value">
-        ${escapeHTML(data.pickerName || "---")}
-      </span>
-    </div>
-
-    <div>
-      <b>TL:</b>
-      <span class="value">
-        ${escapeHTML(data.tlNo || "---")}
-      </span>
-    </div>
-
-    <div>
-      <b>Total Qty:</b>
-      <span class="value">
-        ${escapeHTML(data.totalQty || "---")}
-      </span>
-    </div>
-
-    <div>
-      <b>Reject Qty:</b>
-      <span class="value">
-        ${escapeHTML(data.rejectQty || "0")}
-      </span>
-    </div>
-
-    <div>
-      <b>Status:</b>
-      <span class="value">
-        ${escapeHTML(data.status || "---")}
-      </span>
-    </div>
-
-    <div>
-      <b>VRP:</b>
-      <span class="value">
-        ${escapeHTML(data.vrp || "---")}
-      </span>
-    </div>
-
-    <div>
-      <b>VRP Status:</b>
-      <span class="value">
-        ${escapeHTML(data.vrpStatus || "---")}
-      </span>
-    </div>
-
-  `;
-
-}
-
-
-// =====================================================
-// LOAD TOTE
-// =====================================================
-
-async function loadTote() {
-
-  const toteId =
-    toteIdEl.value.trim();
-
-  if (!toteId) {
-
-    showStatus(
-      "Please enter Tote ID",
-      "error"
+    lockButton(
+      button,
+      "⏳ Loading..."
     );
 
-    toteIdEl.focus();
-
-    return;
-  }
-
-
-  // Instant client cache
-  if (clientCache.has(toteId)) {
-
-    const cached =
-      clientCache.get(toteId);
-
-    fillData(cached);
-
-    showForm();
-
     showStatus(
-      "⚡ Fast loaded",
-      "success"
+      "Tote data load ho raha hai...",
+      "loadingMsg"
     );
 
-    if (
-      cached.status ===
-      "Picking Complete"
-    ) {
-      showVRP();
-    }
 
-  }
+    try {
 
+      if (clientCache.has(toteId)) {
 
-  buttonBusy(
-    "loadBtn",
-    true
-  );
+        const cached =
+          clientCache.get(toteId);
 
+        fillData(cached);
 
-  if (!clientCache.has(toteId)) {
+        showStatus(
+          "⚡ Data loaded from cache.",
+          "successMsg"
+        );
 
-    showStatus(
-      "Loading...",
-      "normal"
-    );
-
-  }
+        return;
+      }
 
 
-  try {
+      const result =
+        await apiRequest({
 
-    const result =
-      await apiRequest({
+          action: "get",
 
-        action: "get",
-
-        toteId: toteId
-
-      });
+          toteId: toteId
+        });
 
 
-    if (result.success) {
+      if (!result.success) {
+
+        throw new Error(
+          result.message ||
+          "Tote data not found."
+        );
+      }
+
 
       const data =
         result.data;
+
 
       clientCache.set(
         toteId,
         data
       );
 
+
       fillData(data);
 
-      showForm();
 
       showStatus(
-        "⚡ Tote loaded",
-        "success"
+        "✅ Tote data loaded successfully.",
+        "successMsg"
       );
 
 
-      if (
-        data.status ===
-        "Picking Complete"
-      ) {
-
-        showVRP();
-
-      }
-      else {
-
-        hideVRP();
-
-      }
-
-      showDetails(data);
-
-    }
-    else {
-
-      // New tote
-      clearForm(false);
-
-      toteIdEl.value =
-        toteId;
-
-      showForm();
-
-      hideVRP();
-
-      detailsCard.classList.add(
-        "hidden"
-      );
+    } catch (error) {
 
       showStatus(
-        "🆕 New Tote — Ready for Picking",
-        "success"
+        "❌ " + error.message,
+        "errorMsg"
       );
 
+    } finally {
+
+      unlockButton(button);
+    }
+  }
+
+
+  /* =====================================================
+     FILL DATA
+     ===================================================== */
+
+  function fillData(data) {
+
+    vendorInput.value =
+      data.vendor || "";
+
+    pickerInput.value =
+      data.pickerName || "";
+
+    tlInput.value =
+      data.tlNo || "";
+
+    qtyInput.value =
+      data.totalQty || "";
+
+    rejectInput.value =
+      data.rejectQty || "0";
+
+    vrpInput.value =
+      data.vrp || "";
+
+
+    updateDetails(data);
+
+
+    detailsCard.classList.add("show");
+
+    actionsCard.classList.add("show");
+  }
+
+
+  /* =====================================================
+     UPDATE DETAILS
+     ===================================================== */
+
+  function updateDetails(data) {
+
+    document.getElementById(
+      "dToteId"
+    ).textContent =
+      data.toteId || "-";
+
+    document.getElementById(
+      "dVendor"
+    ).textContent =
+      data.vendor || "-";
+
+    document.getElementById(
+      "dPicker"
+    ).textContent =
+      data.pickerName || "-";
+
+    document.getElementById(
+      "dTL"
+    ).textContent =
+      data.tlNo || "-";
+
+    document.getElementById(
+      "dQty"
+    ).textContent =
+      data.totalQty || "-";
+
+    document.getElementById(
+      "dReject"
+    ).textContent =
+      data.rejectQty || "0";
+
+    document.getElementById(
+      "dStatus"
+    ).innerHTML =
+      '<span class="badge">' +
+      escapeHTML(data.status || "-") +
+      "</span>";
+
+    document.getElementById(
+      "dVRP"
+    ).textContent =
+      data.vrp || "-";
+
+    document.getElementById(
+      "dVRPStatus"
+    ).textContent =
+      data.vrpStatus || "-";
+  }
+
+
+  /* =====================================================
+     SAVE DATA
+     ===================================================== */
+
+  async function saveData() {
+
+    const toteId =
+      toteInput.value.trim();
+
+    if (!toteId) {
+
+      showStatus(
+        "Tote ID required.",
+        "errorMsg"
+      );
+
+      return;
     }
 
-  }
-  catch (error) {
+
+    const vendor =
+      vendorInput.value.trim();
+
+    const pickerName =
+      pickerInput.value.trim();
+
+    const tlNo =
+      tlInput.value.trim();
+
+    const totalQty =
+      qtyInput.value.trim();
+
+    const rejectQty =
+      rejectInput.value.trim() || "0";
+
+
+    if (!vendor ||
+        !pickerName ||
+        !tlNo ||
+        !totalQty) {
+
+      showStatus(
+        "Please fill all required picking details.",
+        "errorMsg"
+      );
+
+      return;
+    }
+
+
+    if (
+      Number(rejectQty) >
+      Number(totalQty)
+    ) {
+
+      showStatus(
+        "Reject Qty cannot be greater than Total Qty.",
+        "errorMsg"
+      );
+
+      return;
+    }
+
+
+    const button =
+      document.getElementById("saveBtn");
+
+    lockButton(
+      button,
+      "⏳ Saving..."
+    );
 
     showStatus(
-      "❌ Connection problem. Please try again.",
-      "error"
+      "Picking data save ho raha hai...",
+      "loadingMsg"
     );
 
-  }
-  finally {
 
-    buttonBusy(
-      "loadBtn",
-      false
+    try {
+
+      const result =
+        await apiRequest({
+
+          action: "save",
+
+          toteId: toteId,
+
+          vendor: vendor,
+
+          pickerName: pickerName,
+
+          tlNo: tlNo,
+
+          totalQty: totalQty,
+
+          rejectQty: rejectQty,
+
+          status: "Saved",
+
+          vrp: vrpInput.value.trim(),
+
+          vrpStatus: "",
+
+          vrpTimestamp: ""
+        });
+
+
+      if (!result.success) {
+
+        throw new Error(
+          result.message ||
+          "Save failed."
+        );
+      }
+
+
+      const data = {
+
+        toteId: toteId,
+
+        vendor: vendor,
+
+        pickerName: pickerName,
+
+        tlNo: tlNo,
+
+        totalQty: totalQty,
+
+        rejectQty: rejectQty,
+
+        status: "Saved",
+
+        vrp: vrpInput.value.trim(),
+
+        vrpStatus: "",
+
+        vrpTimestamp: ""
+      };
+
+
+      clientCache.set(
+        toteId,
+        data
+      );
+
+
+      updateDetails(data);
+
+      detailsCard.classList.add("show");
+
+      actionsCard.classList.add("show");
+
+
+      showStatus(
+        "✅ Picking data saved successfully.",
+        "successMsg"
+      );
+
+
+    } catch (error) {
+
+      showStatus(
+        "❌ " + error.message,
+        "errorMsg"
+      );
+
+    } finally {
+
+      unlockButton(button);
+    }
+  }
+
+
+  /* =====================================================
+     PICKING COMPLETE
+     ===================================================== */
+
+  async function completePicking() {
+
+    const toteId =
+      toteInput.value.trim();
+
+    if (!toteId) {
+
+      showStatus(
+        "Tote ID required.",
+        "errorMsg"
+      );
+
+      return;
+    }
+
+
+    const button =
+      document.getElementById("completeBtn");
+
+    lockButton(
+      button,
+      "⏳ Completing..."
     );
-
-  }
-
-}
-
-
-// =====================================================
-// VIEW TOTE
-// =====================================================
-
-async function viewTote() {
-
-  const toteId =
-    toteIdEl.value.trim();
-
-  if (!toteId) {
 
     showStatus(
-      "Please enter Tote ID",
-      "error"
+      "Picking complete ho raha hai...",
+      "loadingMsg"
     );
 
-    return;
+
+    try {
+
+      const result =
+        await apiRequest({
+
+          action: "pickingComplete",
+
+          toteId: toteId
+        });
+
+
+      if (!result.success) {
+
+        throw new Error(
+          result.message ||
+          "Unable to complete picking."
+        );
+      }
+
+
+      const cached =
+        clientCache.get(toteId) || {
+
+          toteId: toteId,
+
+          vendor: vendorInput.value,
+
+          pickerName: pickerInput.value,
+
+          tlNo: tlInput.value,
+
+          totalQty: qtyInput.value,
+
+          rejectQty: rejectInput.value || "0",
+
+          vrp: vrpInput.value || "",
+
+          vrpStatus: ""
+        };
+
+
+      cached.status =
+        "Picking Complete";
+
+
+      clientCache.set(
+        toteId,
+        cached
+      );
+
+
+      updateDetails(cached);
+
+
+      showStatus(
+        "✅ Picking completed successfully.",
+        "successMsg"
+      );
+
+
+    } catch (error) {
+
+      showStatus(
+        "❌ " + error.message,
+        "errorMsg"
+      );
+
+    } finally {
+
+      unlockButton(button);
+    }
   }
 
 
-  // Instant client display
-  if (clientCache.has(toteId)) {
+  /* =====================================================
+     VRP VERIFY
+     ===================================================== */
 
-    showDetails(
-      clientCache.get(toteId)
+  async function verifyVRP() {
+
+    const toteId =
+      toteInput.value.trim();
+
+    const vrp =
+      vrpInput.value.trim();
+
+
+    if (!toteId) {
+
+      showStatus(
+        "Tote ID required.",
+        "errorMsg"
+      );
+
+      return;
+    }
+
+
+    if (!vrp) {
+
+      showStatus(
+        "VRP required.",
+        "errorMsg"
+      );
+
+      vrpInput.focus();
+
+      return;
+    }
+
+
+    const button =
+      document.getElementById("verifyBtn");
+
+    lockButton(
+      button,
+      "⏳ Verifying..."
     );
 
     showStatus(
-      "⚡ Instant view",
-      "success"
+      "VRP verify ho raha hai...",
+      "loadingMsg"
     );
 
+
+    try {
+
+      const result =
+        await apiRequest({
+
+          action: "vrpVerify",
+
+          toteId: toteId,
+
+          vrp: vrp
+        });
+
+
+      if (!result.success) {
+
+        throw new Error(
+          result.message ||
+          "VRP verification failed."
+        );
+      }
+
+
+      const data =
+        result.data || {
+
+          ...(clientCache.get(toteId) || {}),
+
+          toteId: toteId,
+
+          vrp: vrp,
+
+          vrpStatus: "Verified",
+
+          status: "VRP Verified"
+        };
+
+
+      data.vrp =
+        vrp;
+
+      data.vrpStatus =
+        "Verified";
+
+      data.status =
+        "VRP Verified";
+
+
+      clientCache.set(
+        toteId,
+        data
+      );
+
+
+      updateDetails(data);
+
+
+      showStatus(
+        "✅ VRP verified successfully.",
+        "successMsg"
+      );
+
+
+    } catch (error) {
+
+      showStatus(
+        "❌ " + error.message,
+        "errorMsg"
+      );
+
+    } finally {
+
+      unlockButton(button);
+    }
   }
-  else {
+
+
+  /* =====================================================
+     VIEW TOTE
+     ===================================================== */
+
+  async function viewTote() {
+
+    const toteId =
+      toteInput.value.trim();
+
+    if (!toteId) {
+
+      showStatus(
+        "Tote ID required.",
+        "errorMsg"
+      );
+
+      return;
+    }
+
 
     showStatus(
-      "Loading...",
-      "normal"
+      "Latest tote details load ho rahe hain...",
+      "loadingMsg"
     );
 
-  }
+
+    try {
+
+      const result =
+        await apiRequest({
+
+          action: "get",
+
+          toteId: toteId
+        });
 
 
-  buttonBusy(
-    "viewBtn",
-    true
-  );
+      if (!result.success) {
 
+        throw new Error(
+          result.message ||
+          "Tote not found."
+        );
+      }
 
-  try {
-
-    const result =
-      await apiRequest({
-
-        action: "get",
-
-        toteId: toteId
-
-      });
-
-
-    if (result.success) {
 
       clientCache.set(
         toteId,
         result.data
       );
 
-      showDetails(
+
+      fillData(
         result.data
       );
 
-      showStatus(
-        "✅ Latest data loaded",
-        "success"
-      );
-
-    }
-    else {
 
       showStatus(
-        "No current data found",
-        "error"
+        "✅ Latest details loaded.",
+        "successMsg"
       );
 
-      detailsCard.classList.add(
-        "hidden"
+
+    } catch (error) {
+
+      showStatus(
+        "❌ " + error.message,
+        "errorMsg"
       );
-
     }
-
-  }
-  catch (error) {
-
-    showStatus(
-      "❌ Unable to load data",
-      "error"
-    );
-
-  }
-  finally {
-
-    buttonBusy(
-      "viewBtn",
-      false
-    );
-
-  }
-
-}
-
-
-// =====================================================
-// SAVE
-// =====================================================
-
-async function saveData() {
-
-  const toteId =
-    toteIdEl.value.trim();
-
-  if (!toteId) {
-
-    showStatus(
-      "Tote ID required",
-      "error"
-    );
-
-    return;
   }
 
 
-  const data =
-    collectData("Saved");
+  /* =====================================================
+     RESET TOTE
+     ===================================================== */
 
+  async function resetTote() {
 
-  buttonBusy(
-    "saveBtn",
-    true
-  );
-
-
-  showStatus(
-    "Saving...",
-    "normal"
-  );
-
-
-  try {
-
-    const result =
-      await apiRequest(data);
-
-
-    if (!result.success) {
-
-      throw new Error(
-        result.message
-      );
-
-    }
-
-
-    const saved =
-      result.data;
-
-
-    // Instant UI update
-    clientCache.set(
-      toteId,
-      saved
-    );
-
-    fillData(saved);
-
-    showDetails(saved);
-
-
-    showStatus(
-      "✅ Saved successfully",
-      "success"
-    );
-
-  }
-  catch (error) {
-
-    showStatus(
-      "❌ Save failed: " +
-      error.message,
-      "error"
-    );
-
-  }
-  finally {
-
-    buttonBusy(
-      "saveBtn",
-      false
-    );
-
-  }
-
-}
-
-
-// =====================================================
-// PICKING COMPLETE
-// ONE API REQUEST
-// =====================================================
-
-async function completePicking() {
-
-  const toteId =
-    toteIdEl.value.trim();
-
-  if (!toteId) {
-
-    showStatus(
-      "Tote ID required",
-      "error"
-    );
-
-    return;
-  }
-
-
-  if (!totalQtyEl.value.trim()) {
-
-    showStatus(
-      "Total Quantity required",
-      "error"
-    );
-
-    totalQtyEl.focus();
-
-    return;
-  }
-
-
-  const data =
-    collectData(
-      "Picking Complete"
-    );
-
-
-  buttonBusy(
-    "completeBtn",
-    true
-  );
-
-
-  showStatus(
-    "Completing picking...",
-    "normal"
-  );
-
-
-  try {
-
-    const result =
-      await apiRequest(data);
-
-
-    if (!result.success) {
-
-      throw new Error(
-        result.message
-      );
-
-    }
-
-
-    const completed =
-      result.data;
-
-
-    // Instant local update
-    clientCache.set(
-      toteId,
-      completed
-    );
-
-    fillData(completed);
-
-    showVRP();
-
-    showDetails(completed);
-
-
-    showStatus(
-      "✅ Picking Complete",
-      "success"
-    );
-
-
-    // Focus VRP
-    setTimeout(
-      () => vrpEl.focus(),
-      100
-    );
-
-  }
-  catch (error) {
-
-    showStatus(
-      "❌ Complete failed: " +
-      error.message,
-      "error"
-    );
-
-  }
-  finally {
-
-    buttonBusy(
-      "completeBtn",
-      false
-    );
-
-  }
-
-}
-
-
-// =====================================================
-// VRP VERIFY
-// =====================================================
-
-async function verifyVRP() {
-
-  const toteId =
-    toteIdEl.value.trim();
-
-  const vrp =
-    vrpEl.value.trim();
-
-
-  if (!toteId) {
-
-    showStatus(
-      "Tote ID required",
-      "error"
-    );
-
-    return;
-  }
-
-
-  if (!vrp) {
-
-    showStatus(
-      "VRP required",
-      "error"
-    );
-
-    vrpEl.focus();
-
-    return;
-  }
-
-
-  buttonBusy(
-    "vrpBtn",
-    true
-  );
-
-
-  showStatus(
-    "Verifying VRP...",
-    "normal"
-  );
-
-
-  try {
-
-    const result =
-      await apiRequest({
-
-        action: "vrpVerify",
-
-        toteId: toteId,
-
-        vrp: vrp
-
-      });
-
-
-    if (!result.success) {
-
-      throw new Error(
-        result.message
-      );
-
-    }
-
-
-    const verified =
-      result.data;
-
-
-    clientCache.set(
-      toteId,
-      verified
-    );
-
-    fillData(verified);
-
-    showDetails(verified);
-
-
-    showStatus(
-      "✅ VRP Verified",
-      "success"
-    );
-
-  }
-  catch (error) {
-
-    showStatus(
-      "❌ VRP verification failed",
-      "error"
-    );
-
-  }
-  finally {
-
-    buttonBusy(
-      "vrpBtn",
-      false
-    );
-
-  }
-
-}
-
-
-// =====================================================
-// RESET
-// =====================================================
-
-async function resetTote() {
-
-  const toteId =
-    toteIdEl.value.trim();
-
-  if (!toteId) {
-
-    showStatus(
-      "Tote ID required",
-      "error"
-    );
-
-    return;
-  }
-
-
-  if (
-    !confirm(
-      "Are you sure you want to Complete / Reset this Tote?"
-    )
-  ) {
-    return;
-  }
-
-
-  showStatus(
-    "Resetting...",
-    "normal"
-  );
-
-
-  try {
-
-    const result =
-      await apiRequest({
-
-        action: "reset",
-
-        toteId: toteId
-
-      });
-
-
-    if (!result.success) {
-
-      throw new Error(
-        result.message
-      );
-
-    }
-
-
-    // Remove local cache
-    clientCache.delete(
-      toteId
-    );
-
-
-    clearForm(true);
-
-
-    showStatus(
-      "✅ Tote completed and reset",
-      "success"
-    );
-
-
-  }
-  catch (error) {
-
-    showStatus(
-      "❌ Reset failed: " +
-      error.message,
-      "error"
-    );
-
-  }
-
-}
-
-
-// =====================================================
-// CLEAR FORM
-// =====================================================
-
-function clearForm(clearTote = true) {
-
-  if (clearTote) {
-    toteIdEl.value = "";
-  }
-
-  vendorEl.value = "";
-  pickerEl.value = "";
-  tlEl.value = "";
-  totalQtyEl.value = "";
-  rejectQtyEl.value = "0";
-  vrpEl.value = "";
-
-  hideVRP();
-
-  detailsCard.classList.add(
-    "hidden"
-  );
-
-}
-
-
-// =====================================================
-// ESCAPE HTML
-// =====================================================
-
-function escapeHTML(value) {
-
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-
-}
-
-
-// =====================================================
-// ENTER KEY
-// =====================================================
-
-toteIdEl.addEventListener(
-  "keydown",
-  function(event) {
-
-    if (event.key === "Enter") {
-
-      event.preventDefault();
-
-      loadTote();
-
-    }
-
-  }
-);
-
-
-// =====================================================
-// AUTO LOAD FROM QR URL
-// Example:
-// ?tote=TOTE-001
-// =====================================================
-
-(function autoLoadQR() {
-
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
-
-  const tote =
-    params.get("tote");
-
-  if (tote) {
-
-    toteIdEl.value =
-      tote.trim();
-
-    loadTote();
-
-  }
-
-})();
-
-</script>
-
-</body>
-</html>
+    
